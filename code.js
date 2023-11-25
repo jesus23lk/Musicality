@@ -16,12 +16,13 @@ function getRandom(num) {
 
 function giveIds() {
 
-  const clef = document.getElementById('clef');
+  const clef = document.getElementById('staff');
+  const locs = clef.children;
 
-  for(let i = 0; i < 9; i++) {
+  for(let i = 0; i < locs.length; i++) {
 
     curChild = clef.children[i];
-    curChild.id = 'loc ' + i;
+    curChild.id = 'loc-' + i;
     curChild.noteVal = notes[i % 7];
   }
 }
@@ -39,17 +40,17 @@ function setupBtns() {
 
 function pickLocation() {
   
-  const locId = getRandom(9);     //get random number 0-9
-  const loc = document.getElementById('loc ' + locId);
+  const locId = getRandom(20);     //get random number 0-20
+  const loc = document.getElementById('loc-' + locId);
 
   const note = document.createElement('img');
   note.src = 'Images/quarter-note.png';
   note.id = 'note';
   loc.appendChild(note);
 
-  if(loc.className === 'line') note.style.bottom = '-30px';
+  if(loc.className === 'line') note.style.bottom = '-15px';
   
-  else note.style.bottom = '-7px';
+  else note.style.bottom = '-4.25px';
 
   return loc;
 
