@@ -21,7 +21,7 @@ function giveIds() {
 
   for(let i = 0; i < locs.length; i++) {
 
-    curChild = clef.children[i];
+    curChild = locs[i];
     curChild.id = 'loc-' + i;
     curChild.noteVal = notes[i % 7];
   }
