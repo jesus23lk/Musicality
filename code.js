@@ -18,6 +18,7 @@ function giveIds() {
 
   const clef = document.getElementById('staff');
   const locs = clef.children;
+  console.log(locs);
 
   for(let i = 0; i < locs.length; i++) {
 
