@@ -1,16 +1,22 @@
 const notes = ['F', 'E', 'D', 'C', 'B', 'A', 'G'];
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-let curLoc = '';
+
+const game = {
+  noteLoc: '',
+  locId: ''
+}
+
 
 window.onload = function() {
 
   giveIds();
   setupBtns();
-  curLoc = pickLocation();
+  game.noteLoc = pickLocation();
 
 }
 
 function getRandom(num) {
+
   return Math.floor(Math.random() * num);
 }
 
@@ -18,7 +24,6 @@ function giveIds() {
 
   const clef = document.getElementById('staff');
   const locs = clef.children;
-  console.log(locs);
 
   for(let i = 0; i < locs.length; i++) {
 
@@ -41,17 +46,28 @@ function setupBtns() {
 
 function pickLocation() {
   
-  const locId = getRandom(20);     //get random number 0-20
+  let locId;
+
+  do {
+    locId = getRandom(20);
+    console.log(locId);
+  }
+  while (locId === game.locId);
+
+  console.log(locId);
+  game.locId = locId;
   const loc = document.getElementById('loc-' + locId);
 
+  if(locId === 10) loc.style.backgroundColor = 'black';
+
   const note = document.createElement('img');
-  note.src = 'Images/quarter-note.png';
+  note.src = 'Images/quarter-note1.png';
   note.id = 'note';
   loc.appendChild(note);
 
-  if(loc.className === 'line') note.style.bottom = '-15px';
+  if(loc.className === 'line') note.style.bottom = '-31px';
   
-  else note.style.bottom = '-4.25px';
+  else note.style.bottom = '-22px';
 
   return loc;
 
@@ -60,7 +76,7 @@ function pickLocation() {
 function evaluateChoice() {
 
   const choice = this.noteVal;
-  const correctAns = curLoc.noteVal;
+  const correctAns = game.noteLoc.noteVal;
   const winMessage = document.getElementById('message');
   let winSound;
 
@@ -84,6 +100,16 @@ function evaluateChoice() {
 }
 
 function resetClef() {
-  curLoc.removeChild(curLoc.firstChild);
-  curLoc = pickLocation();
+
+  if(game.locId === 10) {
+    game.noteLoc.removeChild(game.noteLoc.children[2]);
+    game.noteLoc.style.backgroundColor = 'white';
+  }
+
+  else {
+    game.noteLoc.removeChild(game.noteLoc.firstChild);
+  }
+  
+  game.noteLoc = pickLocation();
+
 }
