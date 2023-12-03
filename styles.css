@@ -44,7 +44,7 @@
   text-align: center;
 }
 
-.line {
+.ledger-line, .line {
   width: 100%;
   height: 1%;
   background-color: black;
@@ -58,7 +58,7 @@
 }
 
 #note {
-  height: 132px;
+  height: 135px;
   left: 200px;
   position: absolute;
   bottom: -31px;
@@ -93,7 +93,7 @@
   left: 60px;
 }
 
-#loc-10 {
+.ledger-line {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -108,6 +108,6 @@
 
 .empty-r {
   height: 100%;
-  width: 306px;
+  width: 303px;
   background-color: white;
 }

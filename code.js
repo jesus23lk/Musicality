@@ -3,7 +3,8 @@ const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 const game = {
   noteLoc: '',
-  locId: ''
+  locId: '',
+  curNote: ''
 }
 
 
@@ -33,14 +34,21 @@ function giveIds() {
   }
 }
 
-function setupBtns() {
+function setupBtns() {    
 
-  const btns = document.getElementById('buttons').children;
+  const btns = document.getElementById('buttons');
 
-  for(let i = 0; i < btns.length; i++) {
+  for(let i = 0; i < notesAG.length; i++) {
 
-    btns[i].noteVal = notesAG[i];
-    btns[i].addEventListener('click', evaluateChoice);
+    const newBtn = document.createElement('button');
+    newBtn.className = 'btn';
+    newBtn.textContent = notesAG[i];
+    newBtn.noteVal = notesAG[i];
+    newBtn.addEventListener('click', evaluateChoice);
+
+    btns.appendChild(newBtn);
+
+
   }
 }
 
@@ -58,16 +66,17 @@ function pickLocation() {
   game.locId = locId;
   const loc = document.getElementById('loc-' + locId);
 
-  if(locId === 10) loc.style.backgroundColor = 'black';
+  if(loc.className === 'ledger-line') loc.style.backgroundColor = 'black';      //make ledger line visible
 
   const note = document.createElement('img');
+  game.curNote = note;
   note.src = 'Images/quarter-note1.png';
   note.id = 'note';
   loc.appendChild(note);
 
-  if(loc.className === 'line') note.style.bottom = '-31px';
+  if(loc.className === 'line' || loc.className === 'ledger-line') note.style.bottom = '-32px';
   
-  else note.style.bottom = '-22px';
+  else note.style.bottom = '-23px';
 
   return loc;
 
@@ -101,14 +110,9 @@ function evaluateChoice() {
 
 function resetClef() {
 
-  if(game.locId === 10) {
-    game.noteLoc.removeChild(game.noteLoc.children[2]);
-    game.noteLoc.style.backgroundColor = 'white';
-  }
+  game.noteLoc.removeChild(game.curNote);
 
-  else {
-    game.noteLoc.removeChild(game.noteLoc.firstChild);
-  }
+  if(game.locId === 10) game.noteLoc.style.backgroundColor = 'white';
   
   game.noteLoc = pickLocation();
 
