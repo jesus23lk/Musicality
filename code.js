@@ -1,76 +1,56 @@
+/* The notes array below is used to populate our lines and spaces
+   Specifically to populate their noteVal property*/
+
 const notes =   ['C', 'B', 'A', 'G', 'F', 'E', 'D'];
+
+/* The notesAG array below is used to populate the text content
+   of our buttons*/
+
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
-const game = {
-  noteLoc: '',
-  locId: '',
-  curNote: '',
-  locsToHide: [],
-}
+let errorState = false;     /* Set true when page is in an error state
+                                 When this happens, interaction is disabled */
 
+const data = {
+  noteDiv: '',              //Actual div that holds the image note (either line or space)
+
+  prevLocId: '',              //Integer value in the inclusive range 0-42
+
+  noteImg: '',              //Current note image, there is only one at any given time
+  extraLines: [],
+
+  highestNote: 0,          
+  lowestNote: 42
+}
 
 window.onload = function() {
 
-  createLocations();
-  setupBtns();
-  game.noteLoc = pickLocation();
+  createLocations();                    //Creates all ledger-line and space locations inside staff
 
-}
+  setupBtns();                          //Creates A-G buttons for user to interact
 
-function getRandom(num) {
+  data.noteDiv = pickLocation();        /*Puts a quarter note img in a random location (space or line).
+                                          Returns that location as a div and stores it in a global variable*/
 
-  return Math.floor(Math.random() * num);
-}
+  document.addEventListener('keydown', evaluateChoice);  //When a key is pressed, call evaluateChoice()
 
-function showLedgerLines(loc) {
-
-  if(loc.className === 'ledger-line') loc.style.backgroundColor = 'black';
-
-  const staff = document.getElementById('staff').children;
-  let curLoc = loc.nextSibling;
-
-  let i = 0;
-  
-  while (curLoc.idNum < 10) {
-
-    if (curLoc.className === 'ledger-line') {
-      curLoc.style.backgroundColor = 'black';
-      game.locsToHide[i] = curLoc;
-      i++;
-    }  
-
-    curLoc = curLoc.nextSibling;
-
-  }
-
-  curLoc = curLoc.previousSibling;
-  i = 0;
-
-  while (curLoc.idNum > 32) {
-
-    if (curLoc.className === 'ledger-line') {
-      curLoc.style.backgroundColor = 'black';
-      game.locsToHide[i] = curLoc;
-      i++;
-    }  
-
-    curLoc = curLoc.previousSibling;
-
-  }
+  setupDropDowns();                           //Sets up drop down menus to change highest and lowest notes
 
 }
 
 function createLocations() {
 
-  const clef = document.getElementById('staff');
+  //This functions creates all lines and spaces where a note can spawn
+
+  const grdStaff = document.getElementById('staff');                  //grand staff contains all lines and spaces
   
   for(let i = 0; i < 43; i++) {
 
     const curChild = document.createElement('div');
 
-    if(i % 2 !== 0) {
+    if(i % 2 !== 0) {                         //If odd, it is either a ledger line or a ledger space
 
-      if(i < 11 || i > 32 || i === 21) {      //create ledger line locations
+      if(i < 11 || i > 32 || i === 21) {      //Ledger lines above treble clef, below bass clef, and middle C
 
         curChild.className = 'ledger-line';
         curChild.innerHTML = `<div class = 'empty-l'></div>
@@ -80,112 +60,363 @@ function createLocations() {
       else curChild.className = 'line';
     }
 
-    else {
+    else {      //If even, it is either a space or ledger-space
+
+      /*ledger spaces start at 2nd space above treble clef and higher.
+        Also 2nd space below bass clef and lower*/
       
-      if (i > 33 || i < 9) curChild.className = 'ledger-space';
+      if (i > 33 || i < 9) curChild.className = 'ledger-space';         
 
-      else curChild.className = 'space';
-    }
+      else curChild.className = 'space';                                //Any other space is just a space  
+    }   
 
-    curChild.id = 'loc-' + i;
-    curChild.idNum = i;
-    curChild.noteVal = notes[i % 7];
+    curChild.id = 'loc-' + i;                       
+    curChild.idNum = i;                             //A seperate property idNum is created here
+    curChild.noteVal = notes[i % 7];                //Assign a note value (A-G) to each location
 
-    clef.appendChild(curChild);
+    grdStaff.appendChild(curChild);                    
   }
 
 }
 
-function setupBtns() {    
+function setupBtns() {
+  
+  //creates the buttons the user will interact with
 
-  const btns = document.getElementById('buttons');
+  const btnDiv = document.getElementById('btn-container');        //div that holds 7 A-G buttons
 
-  for(let i = 0; i < notesAG.length; i++) {
+  for(let i = 0; i < notesAG.length; i++) {               //notesAG is an array that holds charcters 'A' - 'G'
 
     const newBtn = document.createElement('button');
+
     newBtn.className = 'btn';
     newBtn.textContent = notesAG[i];
-    newBtn.noteVal = notesAG[i];
+    newBtn.noteVal = notesAG[i];                              //Each button gets a property named 'noteVal' that gets a value 'A'-'G'
     newBtn.addEventListener('click', evaluateChoice);
 
-    btns.appendChild(newBtn);
-
-
+    btnDiv.appendChild(newBtn);                                 
   }
+}
+
+const getRandom = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));         //returns random value in the range min-max (inclusive)
+
+function showExtraLines(locDiv) {
+
+  /*Entered when our note spawns on a location above treble clef or below bass clef
+    A location that requires extra ledger-lines to be shown*/
+
+  if(locDiv.className === 'ledger-line') locDiv.style.backgroundColor = 'black';      //If on a ledger-line, make it visible
+
+  const staff = document.getElementById('staff').children;
+
+  /*This part below does some linked list style logic where we use a temp variable to traverse a list
+    In this case we are traversing our line and space divs */
+
+  let tempLoc = locDiv;            //start at our note location
+  let i = 0;                    //i is just used to save every location we made visible to an array 
+  
+  while (tempLoc.idNum < 10) {                    //Entered if we are above treble clef
+
+    if (tempLoc.className === 'ledger-line') {
+      
+      /* In here we make every ledger line underneath our
+         note location visible, stopping
+         at the first ledger line above treble clef */
+
+      tempLoc.style.backgroundColor = 'black';
+      data.extraLines[i] = tempLoc;                         //We also wanna save each line we made visible, that way we can hide them later
+      i++;
+    }  
+
+    tempLoc = tempLoc.nextSibling;
+  }
+
+  while (tempLoc.idNum > 32) {                        //Entered if we are below bass clef
+
+    /* In here we make every ledger line above our
+       note location visible, stopping
+       at the first ledger line below bass clef*/
+
+    if (tempLoc.className === 'ledger-line') {
+      tempLoc.style.backgroundColor = 'black';          //We also wanna save each line we made visible, that way we can hide them later
+      data.extraLines[i] = tempLoc;
+      i++;
+    }  
+
+    tempLoc = tempLoc.previousSibling;
+  }
+
 }
 
 function pickLocation() {
   
-  let locId;
+  let locId;                        //Location id of note (integer 0-42)
 
-  do {
-    locId = getRandom(42);
+  do {                              //do while loop is here to make sure our note is not in the same place twice 
+
+    locId = getRandom(data.highestNote, data.lowestNote);       //Get random number in the range 0-42 (inclusive) 
+
   }
-  while (locId === game.locId);
+  while (locId === data.prevLocId);     /* Keep looping if the random location we got is the same as our previous location*/
 
-  game.locId = locId;
-  const loc = document.getElementById('loc-' + locId);
+  data.prevLocId = locId;               //Current location saved as previous location
 
-  // if(loc.className === 'ledger-line') loc.style.backgroundColor = 'black';      //make ledger line visible
+  const locDiv = document.getElementById('loc-' + locId);          //Retrieve location div that corresponds to our locId
 
-  if (loc.className === 'ledger-line' || loc.className === 'ledger-space') showLedgerLines(loc);
+  if (locDiv.className === 'ledger-line' || locDiv.className === 'ledger-space') showExtraLines(locDiv);      //ledger-lines and ledger-spaces need extra lines to be shown
 
-  const note = document.createElement('img');                                   //make note image visible
-  game.curNote = note;
+  //Everything below here pertains to our quarter note image
+
+  const note = document.createElement('img');                                   
+  data.noteImg = note;                                          //We need to save our image to a global because a different function will be in charge of removing it
   note.src = 'Images/quarter-note1.png';
   note.id = 'note';
-  loc.appendChild(note);
+  locDiv.appendChild(note);
 
-  if(loc.className === 'line' || loc.className === 'ledger-line') note.style.bottom = '-16.5px';
+  if(locDiv.className === 'line' || locDiv.className === 'ledger-line') note.style.bottom = '-16.5px';
   
   else note.style.bottom = '-11.5px';
 
-  return loc;
+  //Finally return the div that contains our note
+
+  return locDiv;
 
 }
 
-function evaluateChoice() {
+function setupDropDowns() {
 
-  const choice = this.noteVal;
-  const correctAns = game.noteLoc.noteVal;
-  const winMessage = document.getElementById('message');
-  let winSound;
+  let charRange = 'CBAGFED'         //Defines the range of characters we want
 
-  winMessage.style.display = 'grid';
+  const pianoKeys = [];                  //This will hold our piano note values that go from C1, D1, E1.. all the way to C8
 
-  if(choice === correctAns) {
-    winSound = new Audio("audio/correct-answer.wav");
-    winSound.play();
-    winMessage.style.backgroundColor = 'rgb(42, 135, 42)';
-    winMessage.textContent = 'Correct!';
-    resetClef();
+  let i = 0;
+  let k = 7;
+
+  while(i < 43) {
+
+    for(let j = 0; j < 7; j++) {
+
+      pianoKeys[i] = charRange[j];       //populate pianoKeys array
+      pianoKeys[i] += k;                //String concatenation to add numbers going from 7 to 1
+  
+      i++;
+      if(i === 43) break;
+      if (j === 0) k--;
+    }
+
   }
 
-  else  {
-    winSound = new Audio('audio/wrong-answer.wav');
-    winSound.play();
-    winMessage.style.backgroundColor = 'rgb(198, 51, 51)';
-    winMessage.textContent = 'Try Again!';
+  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
+  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+
+  for(let i = 0; i < 43; i++) {
+
+    /* This loop populates our two selectors for
+       highest and lowest notes */
+  
+    const maxNtOpt = document.createElement('option');                   //We create an option element for each selector
+    const minNtOpt = document.createElement('option');
+  
+    maxNtOpt.textContent = pianoKeys[i];                                    //They each get the same text value
+    minNtOpt.textContent = pianoKeys[i];                                    //That will be one of these: 'C1', 'D1', 'E1', etc.
+
+    if (i === 11) {
+      /* Here we add a marker to help us find the 
+         top line of treble clef in our select menu */
+
+      maxNtOpt.textContent += ' (Treble Top Line)';                        
+      minNtOpt.textContent += ' (Treble Top Line)';  
+    }
+
+    if (i === 21) {      
+      /* Here we add a marker to help us find the 
+         middle C in our select menu */
+
+      maxNtOpt.textContent += ' (Middle C)';                        
+      minNtOpt.textContent += ' (Middle C)';                                        
+    }
+
+    
+    if (i === 31) {      
+      /* Here we add a marker to help us find the 
+         bottom line of bass clef*/
+
+      maxNtOpt.textContent += ' (Bass Bottom Line)';                        
+      minNtOpt.textContent += ' (Bass Bottom Line)';                                        
+    }
+
+
+    maxNtOpt.idNum = i;                                               //Here I define a new attribute 'idNum' that can be 0-42
+    minNtOpt.idNum = i;                                               //We will need it later to compare lowest and highest values
+  
+    maxSelect.appendChild(maxNtOpt);                                   //Add each option to its corresponding selector
+    minSelect.appendChild(minNtOpt);
+  
+    if(i === 42) minNtOpt.selected = 'selected';                       /* Defines the default value of the lowest note
+                                                                         Which should be C1 found at index 42*/
+  }
+
+  /* Below we configure our update button that the user clicks
+     to confirm their choice of highest and lowest notes */
+
+  const updateBtn = document.getElementById('update-btn');      
+  updateBtn.onclick = updateMinMax;                                 
+
+  /* Below we configure our reset button. clicked to reset
+     highest and lowest notes */
+
+  const resetBtn = document.getElementById('reset-btn');
+  resetBtn.onclick = resetMinMax;                                 
+}
+
+function updateMinMax() {
+
+  /* Entered when user clicks update button to update lowest and highest note values */
+
+  document.getElementById('msg-banner').style.display = 'none';               //Hide message banner
+
+  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
+  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+
+  /* Two lines of code below retrieve the <option> elements for the
+     user-selected lowest and highest notes */
+
+  const maxOption = maxSelect.options[maxSelect.selectedIndex];          
+  const minOption = minSelect.options[minSelect.selectedIndex];
+
+  /* Lowest note cannot be greater than highest note.
+     It also cannot be equal to highest note.
+     The conditionals below are there to check for that.
+     If this does happen then we enter an error state */
+
+  const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
+
+  if(minOption.idNum < maxOption.idNum)  {                                  
+
+    errorMsg.textContent = "Error: lowest note cannot be higher than highest note";
+
+    errorState = true;
+
+    removeImg();                    //When in an error state, we want to remove the note image and not accept user input
+  }
+
+  else if (minOption.idNum === maxOption.idNum) {                         
+
+    errorMsg.textContent = "Error: lowest note cannot be equal to highest note";      
+
+    errorState = true;
+
+    removeImg();                    //When in an error state, we want to remove the note image and not accept user input
+  }
+
+  else {              //Entered when user picks legal values for highest and lowest notes
+
+    errorMsg.textContent = '';
+    
+    if(errorState) errorState = false;              //exit error state
+    
+    else removeImg();                                                  //We only want to remove the image if we aren't in an error state
+
+    data.highestNote = maxOption.idNum;               //Finally change the actual highest note value
+    data.lowestNote = minOption.idNum;                //Finally change the actual lowest note value
+
+    data.noteDiv = pickLocation();                              //Spawn a new note in a different location that adheres to our new lowest and highest
+
+
+  }
+
+
+}
+
+function resetMinMax() {
+
+  /* entered when user clicks reset button to reset highest and lowest notes */
+
+  const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
+  errorMsg.textContent = '';
+
+  document.getElementById('msg-banner').style.display = 'none';               //Hide message banner
+
+  if(errorState) errorState = false;                                           //Exit error state
+
+  else removeImg();                                               //If we aren't in an error state, then remove the note image
+
+  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
+  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+
+  maxSelect.options[0].selected = 'selected';                 //Return highest note selector to its defualt value
+  minSelect.options[42].selected = 'selected';                //Return lowest note selector to its default value
+
+  data.highestNote = 0;                                   //Reset lowest and highest note values
+  data.lowestNote = 42;
+
+  data.noteDiv = pickLocation();
+}
+
+function evaluateChoice(e) {
+
+  //Called when user clicks an A-G button or when they press a key
+
+  if(errorState) return;        //If in an error state, we want to disable user input by exiting this function
+
+  let choice;                                             //Choice can either be the value of a button or the value of a keyboard key
+
+  if(e.target.className) choice = e.target.noteVal;              //Checks if user clicked a button by checking if the event target has a class
+
+  else {
+    /*Conditional entered when user pressed a key
+      because keys don't have css classes*/
+
+    choice = e.key.toUpperCase();       
+    
+    /*We only want to accept the keys: A, B, C, D, E, F, G as input and nothing else
+      Choice[1] means the name of the key pressed has more than one character in it so it can't be a letter.
+      The other two options just hone in on the range we set being A-G */
+
+    if(choice[1] || choice.charCodeAt(0) < 65 || choice.charCodeAt(0) > 71) return;
+  }
+
+  const correctAns = data.noteDiv.noteVal;                        //Save the current note's value (correct value)
+  const banner = document.getElementById('msg-banner');          
+  let sound;
+
+  banner.style.display = 'grid';                                //show banner
+
+  if(choice === correctAns) {                                    //Entered if user guessed correctly
+    sound = new Audio("audio/correct-answer.wav");
+    sound.play();
+    banner.style.backgroundColor = 'rgb(42, 135, 42)';
+    banner.textContent = 'Correct!';
+
+    removeImg();                                                //If player got the right answer, we need to remove the note img from where it's currently at
+    data.noteDiv = pickLocation();                              //And spawn a new note in a different location
+  }
+
+  else  {                                                       //Entered if user guessed incorrectly
+    sound = new Audio('audio/wrong-answer.wav');
+    sound.play();
+    banner.style.backgroundColor = 'rgb(198, 51, 51)';
+    banner.textContent = 'Try Again!';
   }
 
 }
 
-function resetClef() {
+function removeImg() {
 
-  game.noteLoc.removeChild(game.curNote);
+  data.noteDiv.removeChild(data.noteImg);                     //Remove the note image
 
-  if(game.noteLoc.className === 'ledger-line') game.noteLoc.style.backgroundColor = 'white';
+  if(data.noteDiv.className === 'ledger-line') data.noteDiv.style.backgroundColor = 'white';      //If the current location is a ledger-line, then we need to hide it
 
-  if(game.locsToHide) {
+  if(data.extraLines) {
 
-    for(let i = 0; i < game.locsToHide.length; i++) {
+    /* If there are extra ledger lines visible,
+       then we want to hide each of those lines*/
 
-      game.locsToHide[i].style.backgroundColor = 'white';
+    for(let i = 0; i < data.extraLines.length; i++) {
+
+      data.extraLines[i].style.backgroundColor = 'white';
 
     }
 
   }
-  
-  game.noteLoc = pickLocation();
-
 }

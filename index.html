@@ -8,15 +8,33 @@
     <title>Music Project</title>
   </head>
   <body>
-    <div id = 'canvas'>
-      <div class = 'vertical-line'></div>
-      <div id = 'staff'></div>
-      <div class = 'vertical-line'></div>
+    <div id = 'page'>
+      <div id = 'left-area'>
+        <div id = 'max-container'>
+          <label for = 'max-select'>Highest Note</label>
+          <select id = 'max-select'></select>
+        </div>
+        <div id = 'min-container'>
+          <label for = 'min-select'>Lowest Note</label>
+          <select id = 'min-select'></select>
+        </div>
+        <button id = 'update-btn'>Update</button>
+        <button id = 'reset-btn'>Reset</button>
+        <p id = 'error-msg'></p>
+      </div>
+      <div id = 'center-area'>
+        <div id = 'canvas'>
+          <div class = 'vertical-line'></div>
+          <div id = 'staff'></div>
+          <div class = 'vertical-line'></div>
+        </div>
+        <div id = 'btn-container'></div>
+        <div id = 'msg-banner'>CORRECT!</div>
+        <img src = 'Images/treble-clef.png' id = 't-pic'>
+        <img src = 'Images/bass-clef.png' id = 'b-pic'>      
+      </div>
+      <div id = 'right-area'></div>
     </div>
-    <div id = 'buttons'></div>
-    <div id = 'message'>CORRECT!</div>
-    <img src = 'Images/treble-clef.png' id = 't-pic'>
-    <img src = 'Images/bass-clef.png' id = 'b-pic'>
     <script src = 'code.js'></script>
   </body>
 </html>
