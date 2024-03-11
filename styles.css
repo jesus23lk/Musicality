@@ -81,20 +81,52 @@ body {
   margin:auto;
   margin-top: 50px;
   width: 600px;
-  height: 320px;
+  height: 400px;
 }
 
 .vertical-line {
-  top: 86.6px;
+  top: 138px;
   position: relative;
-  height: 46%;
-  width: 2.5px;
+  height: 38.8%;
+  width: 3.5px;
   background-color: black;
 }
 
 #staff {
   width: 595px;
   height: 100%;
+}
+
+.ledger-line, .line {
+  width: 100%;
+  height: .25%;
+  background-color: black;
+  position: relative;
+}
+
+.ledger-space, .space {
+  width: 100%;
+  height: 3.596%;
+  position: relative;
+}
+
+.empty-l {
+  height: 100%;
+  width: 248px;
+  background-color: #ffffff;
+}
+
+.empty-r {
+  height: 100%;
+  width: 308px;
+  background-color: white;
+}
+
+#note {                                         /* Corresponds to single quarter note image */
+  height: 89px;
+  left: 223px;
+  position: absolute;
+  bottom: -31px;
 }
 
 #btn-container {                    /* Div that holds our 8 buttons */
@@ -131,56 +163,21 @@ body {
   font-weight: 800;
 }
 
-.ledger-line, .line {
-  width: 100%;
-  height: .3%;
-  background-color: black;
-  position: relative;
-}
-
-.ledger-space, .space {
-  width: 100%;
-  height: 4.259%;
-  position: relative;
-}
-
-#note {                                         /* Corresponds to single quarter note image */
-  height: 70px;
-  left: 232px;
-  position: absolute;
-  bottom: -31px;
-}
-
-
 .btn:hover {
   background-color: rgb(65, 56, 198);
 }
 
-/* #t-pic {                  
-  height: 100px;
-  position: absolute;
-  top: 220px;
-  left: 40px;
-}
-
-#b-pic {                
-  height: 50px;
-  position: absolute;
-  top: 327px;
-  left: 60px;
-} */
-
 #t-pic {
   height: 100px;
   position: relative;
-  bottom: 356px;
+  bottom: 382px;
   left: 10px;
 }
 
 #b-pic {
   height: 50px;
   position: relative;
-  bottom: 298px;
+  bottom: 322px;
   right: 37px;
 }
 
@@ -192,14 +189,3 @@ body {
   background-color: white;
 }
 
-.empty-l {
-  height: 100%;
-  width: 252px;
-  background-color: white;
-}
-
-.empty-r {
-  height: 100%;
-  width: 313px;
-  background-color: white;
-}

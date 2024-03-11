@@ -4,12 +4,12 @@
 const notes =   ['C', 'B', 'A', 'G', 'F', 'E', 'D'];
 
 /* The notesAG array below is used to populate the text content
-   of our buttons*/
+  of our buttons*/
 
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 let errorState = false;     /* Set true when page is in an error state
-                                 When this happens, interaction is disabled */
+                                When this happens, interaction is disabled */
 
 const data = {
   noteDiv: '',              //Actual div that holds the image note (either line or space)
@@ -19,8 +19,8 @@ const data = {
   noteImg: '',              //Current note image, there is only one at any given time
   extraLines: [],
 
-  highestNote: 0,          
-  lowestNote: 42
+  highestNote: 11,          //Default highest note F6          
+  lowestNote: 45            //Lowest note G1
 }
 
 window.onload = function() {
@@ -44,28 +44,28 @@ function createLocations() {
 
   const grdStaff = document.getElementById('staff');                  //grand staff contains all lines and spaces
   
-  for(let i = 0; i < 43; i++) {
+  for(let i = 0; i < 52; i++) {
 
     const curChild = document.createElement('div');
 
-    if(i % 2 !== 0) {                         //If odd, it is either a ledger line or a ledger space
+    if(i % 2 === 0) {                         //! Lines are now found on even indices
 
-      if(i < 11 || i > 32 || i === 21) {      //Ledger lines above treble clef, below bass clef, and middle C
+      if(i < 17 || i > 39 || i === 28) {      //Ledger lines above treble clef, below bass clef, and middle C
 
         curChild.className = 'ledger-line';
         curChild.innerHTML = `<div class = 'empty-l'></div>
                               <div class = 'empty-r'></div>`;
       }
- 
+
       else curChild.className = 'line';
     }
 
-    else {      //If even, it is either a space or ledger-space
+    else {      //! Spaces now found on odd indices
 
       /*ledger spaces start at 2nd space above treble clef and higher.
         Also 2nd space below bass clef and lower*/
       
-      if (i > 33 || i < 9) curChild.className = 'ledger-space';         
+      if (i < 16 || i > 40) curChild.className = 'ledger-space';         
 
       else curChild.className = 'space';                                //Any other space is just a space  
     }   
@@ -76,6 +76,8 @@ function createLocations() {
 
     grdStaff.appendChild(curChild);                    
   }
+
+  console.log(grdStaff.children);
 
 }
 
@@ -115,13 +117,13 @@ function showExtraLines(locDiv) {
   let tempLoc = locDiv;            //start at our note location
   let i = 0;                    //i is just used to save every location we made visible to an array 
   
-  while (tempLoc.idNum < 10) {                    //Entered if we are above treble clef
+  while (tempLoc.idNum < 17) {                    //Entered if we are above treble clef
 
     if (tempLoc.className === 'ledger-line') {
       
       /* In here we make every ledger line underneath our
-         note location visible, stopping
-         at the first ledger line above treble clef */
+        note location visible, stopping
+        at the first ledger line above treble clef */
 
       tempLoc.style.backgroundColor = 'black';
       data.extraLines[i] = tempLoc;                         //We also wanna save each line we made visible, that way we can hide them later
@@ -131,11 +133,11 @@ function showExtraLines(locDiv) {
     tempLoc = tempLoc.nextSibling;
   }
 
-  while (tempLoc.idNum > 32) {                        //Entered if we are below bass clef
+  while (tempLoc.idNum > 39) {                        //Entered if we are below bass clef
 
     /* In here we make every ledger line above our
-       note location visible, stopping
-       at the first ledger line below bass clef*/
+      note location visible, stopping
+      at the first ledger line below bass clef*/
 
     if (tempLoc.className === 'ledger-line') {
       tempLoc.style.backgroundColor = 'black';          //We also wanna save each line we made visible, that way we can hide them later
@@ -173,9 +175,9 @@ function pickLocation() {
   note.id = 'note';
   locDiv.appendChild(note);
 
-  if(locDiv.className === 'line' || locDiv.className === 'ledger-line') note.style.bottom = '-16.5px';
+  if(locDiv.className === 'line' || locDiv.className === 'ledger-line') note.style.bottom = '-22px';
   
-  else note.style.bottom = '-11.5px';
+  else note.style.bottom = '-15px';
 
   //Finally return the div that contains our note
 
@@ -190,9 +192,9 @@ function setupDropDowns() {
   const pianoKeys = [];                  //This will hold our piano note values that go from C1, D1, E1.. all the way to C8
 
   let i = 0;
-  let k = 7;
+  let k = 8;
 
-  while(i < 43) {
+  while(i < 52) {
 
     for(let j = 0; j < 7; j++) {
 
@@ -200,7 +202,7 @@ function setupDropDowns() {
       pianoKeys[i] += k;                //String concatenation to add numbers going from 7 to 1
   
       i++;
-      if(i === 43) break;
+      if(i === 52) break;
       if (j === 0) k--;
     }
 
@@ -208,62 +210,65 @@ function setupDropDowns() {
 
   const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
   const minSelect = document.getElementById('min-select');       //Drop down selector for min note
-
-  for(let i = 0; i < 43; i++) {
+  
+  for(let i = 0; i < 52; i++) {
 
     /* This loop populates our two selectors for
-       highest and lowest notes */
+      highest and lowest notes */
   
-    const maxNtOpt = document.createElement('option');                   //We create an option element for each selector
-    const minNtOpt = document.createElement('option');
+    const maxOption = document.createElement('option');                   //We create an option element for each selector
+    const minOption = document.createElement('option');
   
-    maxNtOpt.textContent = pianoKeys[i];                                    //They each get the same text value
-    minNtOpt.textContent = pianoKeys[i];                                    //That will be one of these: 'C1', 'D1', 'E1', etc.
+    maxOption.textContent = pianoKeys[i];                                    //They each get the same text value
+    minOption.textContent = pianoKeys[i];                                    //That will be one of these: 'C8, 'B7', 'A7', etc.
 
-    if (i === 11) {
+    if (i === 18) {
       /* Here we add a marker to help us find the 
-         top line of treble clef in our select menu */
+        top line of treble clef in our select menu */
 
-      maxNtOpt.textContent += ' (Treble Top Line)';                        
-      minNtOpt.textContent += ' (Treble Top Line)';  
+      maxOption.textContent += ' (Treble Top Line)';                        
+      minOption.textContent += ' (Treble Top Line)';  
     }
 
-    if (i === 21) {      
+    if (i === 28) {      
       /* Here we add a marker to help us find the 
-         middle C in our select menu */
+        middle C in our select menu */
 
-      maxNtOpt.textContent += ' (Middle C)';                        
-      minNtOpt.textContent += ' (Middle C)';                                        
+      maxOption.textContent += ' (Middle C)';                        
+      minOption.textContent += ' (Middle C)';                                        
     }
 
     
-    if (i === 31) {      
+    if (i === 38) {      
       /* Here we add a marker to help us find the 
-         bottom line of bass clef*/
+        bottom line of bass clef*/
 
-      maxNtOpt.textContent += ' (Bass Bottom Line)';                        
-      minNtOpt.textContent += ' (Bass Bottom Line)';                                        
+      maxOption.textContent += ' (Bass Bottom Line)';                        
+      minOption.textContent += ' (Bass Bottom Line)';                                        
     }
 
 
-    maxNtOpt.idNum = i;                                               //Here I define a new attribute 'idNum' that can be 0-42
-    minNtOpt.idNum = i;                                               //We will need it later to compare lowest and highest values
+    maxOption.idNum = i;                                               //Here I define a new attribute 'idNum' that can be 0-42
+    minOption.idNum = i;                                               //We will need it later to compare lowest and highest values
   
-    maxSelect.appendChild(maxNtOpt);                                   //Add each option to its corresponding selector
-    minSelect.appendChild(minNtOpt);
-  
-    if(i === 42) minNtOpt.selected = 'selected';                       /* Defines the default value of the lowest note
-                                                                         Which should be C1 found at index 42*/
+    maxSelect.appendChild(maxOption);                                   //Add each option to its corresponding selector
+    minSelect.appendChild(minOption);
+    
+    if(i === 11) maxOption.selected = 'selected' ;                      /* Defiens the default value of the highest note
+                                                                          which is F6 */
+
+    if(i === 45) minOption.selected = 'selected';                       /* Defines the default value of the lowest note
+                                                                          Which is G1*/
   }
 
   /* Below we configure our update button that the user clicks
-     to confirm their choice of highest and lowest notes */
+    to confirm their choice of highest and lowest notes */
 
   const updateBtn = document.getElementById('update-btn');      
   updateBtn.onclick = updateMinMax;                                 
 
   /* Below we configure our reset button. clicked to reset
-     highest and lowest notes */
+    highest and lowest notes */
 
   const resetBtn = document.getElementById('reset-btn');
   resetBtn.onclick = resetMinMax;                                 
@@ -279,15 +284,15 @@ function updateMinMax() {
   const minSelect = document.getElementById('min-select');       //Drop down selector for min note
 
   /* Two lines of code below retrieve the <option> elements for the
-     user-selected lowest and highest notes */
+    user-selected lowest and highest notes */
 
   const maxOption = maxSelect.options[maxSelect.selectedIndex];          
   const minOption = minSelect.options[minSelect.selectedIndex];
 
   /* Lowest note cannot be greater than highest note.
-     It also cannot be equal to highest note.
-     The conditionals below are there to check for that.
-     If this does happen then we enter an error state */
+    It also cannot be equal to highest note.
+    The conditionals below are there to check for that.
+    If this does happen then we enter an error state */
 
   const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
 
@@ -344,11 +349,11 @@ function resetMinMax() {
   const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
   const minSelect = document.getElementById('min-select');       //Drop down selector for min note
 
-  maxSelect.options[0].selected = 'selected';                 //Return highest note selector to its defualt value
-  minSelect.options[42].selected = 'selected';                //Return lowest note selector to its default value
+  maxSelect.options[11].selected = 'selected';                 //Return highest note selector to its defualt value
+  minSelect.options[45].selected = 'selected';                //Return lowest note selector to its default value
 
-  data.highestNote = 0;                                   //Reset lowest and highest note values
-  data.lowestNote = 42;
+  data.highestNote = 11;                                   //Reset lowest and highest note values
+  data.lowestNote = 45;
 
   data.noteDiv = pickLocation();
 }
@@ -410,7 +415,7 @@ function removeImg() {
   if(data.extraLines) {
 
     /* If there are extra ledger lines visible,
-       then we want to hide each of those lines*/
+      then we want to hide each of those lines*/
 
     for(let i = 0; i < data.extraLines.length; i++) {
 
