@@ -20,7 +20,15 @@ const data = {
   extraLines: [],
 
   highestNote: 11,          //Default highest note F6          
-  lowestNote: 45            //Lowest note G1
+  lowestNote: 45,           //Lowest note G1
+
+  volumeOn: true            //Is volume enabled
+}
+
+const sounds = {
+  correct: new Audio("./audio/correct-answer.wav"),
+  wrong: new Audio("./audio/wrong-answer.wav"),
+  click: new Audio("./audio/click-1.mp3")
 }
 
 window.onload = function() {
@@ -35,6 +43,10 @@ window.onload = function() {
   document.addEventListener('keydown', evaluateChoice);  //When a key is pressed, call evaluateChoice()
 
   setupDropDowns();                           //Sets up drop down menus to change highest and lowest notes
+
+  setupVolume();                            //Sets up the volume button to disable an enable volume
+
+  setupHelpModal();
 
 }
 
@@ -177,7 +189,7 @@ function pickLocation() {
 
   if(locDiv.className === 'line' || locDiv.className === 'ledger-line') note.style.bottom = '-22px';
   
-  else note.style.bottom = '-15px';
+  else note.style.bottom = '-17px';
 
   //Finally return the div that contains our note
 
@@ -381,15 +393,15 @@ function evaluateChoice(e) {
     if(choice[1] || choice.charCodeAt(0) < 65 || choice.charCodeAt(0) > 71) return;
   }
 
-  const correctAns = data.noteDiv.noteVal;                        //Save the current note's value (correct value)
+  //Save current note's value
+  const correctAns = data.noteDiv.noteVal;                        
   const banner = document.getElementById('msg-banner');          
-  let sound;
 
-  banner.style.display = 'grid';                                //show banner
+  //Show banner
+  banner.style.display = 'grid';                               
 
   if(choice === correctAns) {                                    //Entered if user guessed correctly
-    sound = new Audio("audio/correct-answer.wav");
-    sound.play();
+    if(data.volumeOn) sounds.correct.play();                               //Only play sound if volume is on 
     banner.style.backgroundColor = 'rgb(42, 135, 42)';
     banner.textContent = 'Correct!';
 
@@ -398,8 +410,7 @@ function evaluateChoice(e) {
   }
 
   else  {                                                       //Entered if user guessed incorrectly
-    sound = new Audio('audio/wrong-answer.wav');
-    sound.play();
+    if(data.volumeOn) sounds.wrong.play();                              
     banner.style.backgroundColor = 'rgb(198, 51, 51)';
     banner.textContent = 'Try Again!';
   }
@@ -424,4 +435,35 @@ function removeImg() {
     }
 
   }
+}
+
+function setupVolume() {
+
+  const volumePic = document.getElementById('volume-pic');
+  
+  
+  volumePic.onclick = () => {
+    
+    if(data.volumeOn) {
+      sounds.click.play();
+      data.volumeOn = false;
+      volumePic.src = 'Images/no-volume-logo.png';
+    }
+    
+    else {
+      sounds.click.play();
+      data.volumeOn = true;
+      volumePic.src = 'Images/volume-logo.png';
+    }
+  }
+}
+
+function setupHelpModal() {
+
+  const helpModal = document.getElementById("help-modal");
+  const closeHelp = document.getElementById("close-help");
+  const helpBtn = document.getElementById("help-btn");
+
+  helpBtn.onclick = () => {helpModal.showModal() }
+  closeHelp.onclick = () => { helpModal.close() }
 }

@@ -8,7 +8,9 @@
     <title>Music Project</title>
   </head>
   <body>
+    <!-- Everything enclosded within page div-->
     <div id = 'page'>
+      <!-- Left 3rd of page -->
       <div id = 'left-area'>
         <div id = 'max-container'>
           <label for = 'max-select'>Highest Note</label>
@@ -22,6 +24,7 @@
         <button id = 'reset-btn'>Reset</button>
         <p id = 'error-msg'></p>
       </div>
+      <!-- Center of page-->
       <div id = 'center-area'>
         <div id = 'canvas'>
           <div class = 'vertical-line'></div>
@@ -33,8 +36,20 @@
         <img src = 'Images/treble-clef.png' id = 't-pic'>
         <img src = 'Images/bass-clef.png' id = 'b-pic'>      
       </div>
-      <div id = 'right-area'></div>
+      <!-- Right 3rd of Page-->
+      <div id = 'right-area'>
+        <button id = 'volume-btn' class = 'ui-btn'>
+          <img src = 'Images/volume-logo.png' id = 'volume-pic'>
+        </button>
+        <button id = 'help-btn' class = 'ui-btn'>
+          <img src = 'Images/question-mark.png' id = 'question-pic'>
+        </button>
+      </div>
     </div>
+    <dialog id="help-modal">
+      <p>Press the A-G keys on your keyboard to guess a note or click the A-G buttons to guess a note</p>
+      <button id="close-help">Close</button>
+    </dialog>
     <script src = 'code.js'></script>
   </body>
 </html>
