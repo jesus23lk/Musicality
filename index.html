@@ -6,25 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = 'stylesheet' href = 'styles.css'>
     <title>Music Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   </head>
   <body>
-    <!-- Everything enclosded within page div-->
-    <div id = 'page'>
-      <!-- Left 3rd of page -->
-      <div id = 'left-area'>
-        <div id = 'max-container'>
-          <label for = 'max-select'>Highest Note</label>
-          <select id = 'max-select'></select>
-        </div>
-        <div id = 'min-container'>
-          <label for = 'min-select'>Lowest Note</label>
-          <select id = 'min-select'></select>
-        </div>
-        <button id = 'update-btn'>Update</button>
-        <button id = 'reset-btn'>Reset</button>
-        <p id = 'error-msg'></p>
+    <!-- Side bar content-->
+    <aside id="sidebar">
+      <span class="material-symbols-outlined" id="close-icon">close</span>
+      <button id = 'volume-btn' class = 'ui-btn'>
+        <img src = 'Images/volume-logo.png' id = 'volume-pic'>
+      </button>
+      <button id = 'help-btn' class = 'ui-btn'>
+        <img src = 'Images/question-mark.png' id = 'question-pic'>
+      </button>
+      <div id = 'max-container'>
+        <label for = 'max-select'>Highest Note</label>
+        <select id = 'max-select'></select>
       </div>
-      <!-- Center of page-->
+      <div id = 'min-container'>
+        <label for = 'min-select'>Lowest Note</label>
+        <select id = 'min-select'></select>
+      </div>
+      <button id = 'update-btn'>Update</button>
+      <button id = 'reset-btn'>Reset</button>
+      <p id = 'error-msg'></p>      
+    </aside>
+    <!-- main content-->
+    <div id = 'page'>
+      <header id="page-header">
+        <nav>
+          <span class="material-symbols-outlined" id="menu-icon">menu</span>
+        </nav>
+      </header>
       <div id = 'center-area'>
         <div id = 'canvas'>
           <div class = 'vertical-line'></div>
@@ -32,18 +44,9 @@
           <div class = 'vertical-line'></div>
         </div>
         <div id = 'btn-container'></div>
-        <div id = 'msg-banner'>CORRECT!</div>
+        <div id = 'msg-banner'>Press a key or click</div>
         <img src = 'Images/treble-clef.png' id = 't-pic'>
         <img src = 'Images/bass-clef.png' id = 'b-pic'>      
-      </div>
-      <!-- Right 3rd of Page-->
-      <div id = 'right-area'>
-        <button id = 'volume-btn' class = 'ui-btn'>
-          <img src = 'Images/volume-logo.png' id = 'volume-pic'>
-        </button>
-        <button id = 'help-btn' class = 'ui-btn'>
-          <img src = 'Images/question-mark.png' id = 'question-pic'>
-        </button>
       </div>
     </div>
     <dialog id="help-modal">

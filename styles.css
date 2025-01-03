@@ -1,31 +1,62 @@
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
 }
 
 body {
-  margin:auto;
+  height: 2000px
+}
+
+#sidebar {
+  height: 100vh;
+  position: fixed;
+  background-color: rgb(222, 222, 222);
+  width: 20vw;
+  padding: 1em;
+  left: -100vw;
+  transition: 210ms;
+  z-index: 3;
+}
+
+#sidebar.visible {
+  left: 0;
+}
+
+#sidebar * {
+  margin-bottom: 5px;
+}
+
+#page-header {
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  align-items: center;
+}
+
+#menu-icon, #close-icon {
+  cursor: pointer;
+}
+
+#menu-icon {
+  font-size: 2rem;
+}
+
+#close-icon {
+  position:absolute;
+  right: 10px;
+  top: 10px;
 }
 
 #page {
-  margin: auto;
-  height: 100vh;
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-}
-
-#left-area {                                          /* (div) Left third of the entire page */
-  background-color: rgb(240, 240, 240);
-  padding-left: 9px;
-  padding-top: 9px;
-}
-
-#min-container {
-  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #update-btn {
-  margin-top: 15px;
   width: 200px;
   height: 40px;
   border: none;
@@ -43,8 +74,8 @@ body {
   border: 2px solid black;
 }
 
-#reset-btn {                                /* (button) Used to reset highest and lowest notes */
-  margin-top: 15px;
+/* (button) Used to reset highest and lowest notes */
+#reset-btn {                               
   width: 200px;
   height: 40px;
   border: none;
@@ -71,17 +102,20 @@ body {
 }
 
 #center-area {
-  margin: auto;
   height: 100%;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Canvas is pretty much a measure of music
+   it contains first a vertical measure line, then the staff, then another vertical measure line */
 #canvas {
   display: flex;
   flex-direction: row;
-  margin:auto;
-  margin-top: 50px;
   width: 600px;
-  /* height: 400px; */
 }
 
 /* Class for two lines on the left and right side of the staff */
@@ -93,7 +127,6 @@ body {
   background-color: black;
 }
 
-
 /* staff div is immediate parent of all lines and spaces*/
 #staff {
   width: 595px;
@@ -104,12 +137,14 @@ body {
   height: 2px;
   background-color: black;
   position: relative;
+  z-index: 1;
 }
 
 .ledger-space, .space {
   width: 100%;
   height: 14px;
   position: relative;
+  z-index: 1;
 }
 
 .ledger-line {
@@ -135,39 +170,42 @@ body {
   height: 95px;
   left: 220px;
   position: absolute;
+  z-index: 2;
 }
 
 /* Image of treble clef */
 #t-pic {                  
-  height: 100px;
+  height: 110px;
   position: relative;
-  bottom: 382px;
-  left: 10px;
+  bottom: 425px;
+  left: -270px;
+  z-index: 2;
 }
 
 /* Image of bass clef */
 #b-pic {                            
-  height: 50px;
+  height: 52px;
   position: relative;
-  bottom: 322px;
-  right: 37px;
+  bottom: 420px;
+  right: 260px;
+  z-index: 2;
 }
 
 /* Div that holds our 8 buttons */
 #btn-container {                    
-  margin-top: 30px;
-  width: 600px;
-  height: 75px;
+  width: 100%;
+  height: 70px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 1em;
 }
 
 /* Class that targets all of our 8 buttons */
 .btn {                            
-  width:70px;
+  width: 10%;
   height: 100%;
-  font-size: 20px;
+  font-size: 1.2rem;
   border: none;
   border-radius: 10px;
   background-color: rgb(103, 190, 234);
@@ -181,32 +219,29 @@ body {
 }
 
 #msg-banner {  
-  font-size: 30px;
-  margin-top: 40px;
-  width: 600px;
-  height: 80px;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 50px; 
   color: white;
-  display: none;
-  align-items: center;
-  text-align: center;
-  position: absolute;
+  background-color: gray;
+  display: flex;
   font-weight: 800;
+  justify-content: center;
+  align-items: center;
 }
 
 .ui-btn {
-  margin-left: 10px;
-  margin-top: 10px;
   background-color: white;
   border: 1px solid black;
   border-radius: 8px;
   padding: 0;
-  height: 78px;
-  width: 78px;
+  height: 60px;
+  width: 60px;
 }
 
 #volume-pic, #question-pic {
-  height: 78px;
-  width: 78px;
+  height: 60px;
+  width: 60px;
   cursor: pointer;
 }
 
@@ -233,11 +268,115 @@ body {
   background-color: rgb(138, 138, 138);
   height: 25px;
   width: 60px;
-  border-radius: 3px;
+  border-radius: 3px; 
   cursor:pointer;
 }
 
+@media (max-width: 500px) {
 
+  #canvas {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+  }
 
+  #center-area {
+    width: 300px
+  }
+  
+  /* Class for two lines on the left and right side of the staff */
+  .vertical-line {
+    top: 144px;
+    position: relative;
+    height: 162px;
+    width: 3.5px;
+    background-color: black;
+  }
+  
+  /* staff div is immediate parent of all lines and spaces*/
+  #staff {
+    width: 299px;
+  }
 
+  .empty-l {
+    height: 100%;
+    width: 200px;
+    background-color: #ffffff;
+  }
+  
+  .empty-r {
+    height: 100%;
+    width: 55px;
+    background-color: white;
+  }
 
+  /* Div that holds our 8 buttons */
+  #btn-container {                    
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+  }
+
+  .btn {                            
+    width: 30%;
+    height: 60px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(103, 190, 234);
+    color: white;
+    cursor: pointer;
+    font-weight: 900;                       
+  }
+  
+  .btn:hover {
+    background-color: rgb(65, 56, 198);
+  }
+  
+  #msg-banner {  
+    font-size: 1.5rem;
+    width: 100%;
+    height: 50px; 
+    color: white;
+    background-color: gray;
+    display: flex;
+    font-weight: 800;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ledger-line {
+  }
+
+  /* Corresponds to single quarter note image */
+  #note {                                       
+    height: 95px;
+    left: 172px;
+    position: absolute;
+  }
+
+  /* Image of treble clef */
+  #t-pic {                  
+    height: 110px;
+    position: relative;
+    bottom: 555px;
+    left: -120px;
+  }
+
+  /* Image of bass clef */
+  #b-pic {                            
+    height: 52px;
+    position: relative;
+    bottom: 550px;
+    right: 110px;
+  }
+
+  #sidebar {
+    width: 60vw;
+  }
+
+}

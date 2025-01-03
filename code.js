@@ -48,6 +48,8 @@ window.onload = function() {
 
   setupHelpModal();
 
+  setupSidebar();
+
 }
 
 function createLocations() {
@@ -65,6 +67,7 @@ function createLocations() {
       if(i < 17 || i > 39 || i === 28) {      //Ledger lines above treble clef, below bass clef, and middle C
 
         curChild.className = 'ledger-line';
+        // curChild.insertAdjacentHTML = ('beforeend',`<div class = 'empty-l'></div><div class = 'empty-r'></div>`);
         curChild.innerHTML = `<div class = 'empty-l'></div>
                               <div class = 'empty-r'></div>`;
       }
@@ -88,8 +91,6 @@ function createLocations() {
 
     grdStaff.appendChild(curChild);                    
   }
-
-  console.log(grdStaff.children);
 
 }
 
@@ -290,7 +291,10 @@ function updateMinMax() {
 
   /* Entered when user clicks update button to update lowest and highest note values */
 
-  document.getElementById('msg-banner').style.display = 'none';               //Hide message banner
+  const msgBanner = document.getElementById('msg-banner')
+  msgBanner.style.backgroundColor = 'rgb(128, 128, 128)';               //Hide message banner
+  msgBanner.textContent = "Press a key or click a button";
+  
 
   const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
   const minSelect = document.getElementById('min-select');       //Drop down selector for min note
@@ -352,7 +356,9 @@ function resetMinMax() {
   const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
   errorMsg.textContent = '';
 
-  document.getElementById('msg-banner').style.display = 'none';               //Hide message banner
+  const msgBanner = document.getElementById('msg-banner')
+  msgBanner.style.backgroundColor = 'rgb(128, 128, 128)';               //Hide message banner
+  msgBanner.textContent = "Press a key or click a button";
 
   if(errorState) errorState = false;                                           //Exit error state
 
@@ -398,7 +404,7 @@ function evaluateChoice(e) {
   const banner = document.getElementById('msg-banner');          
 
   //Show banner
-  banner.style.display = 'grid';                               
+  banner.style.display = 'flex';                               
 
   if(choice === correctAns) {                                    //Entered if user guessed correctly
     if(data.volumeOn) sounds.correct.play();                               //Only play sound if volume is on 
@@ -466,4 +472,14 @@ function setupHelpModal() {
 
   helpBtn.onclick = () => {helpModal.showModal() }
   closeHelp.onclick = () => { helpModal.close() }
+}
+
+function setupSidebar() {
+
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+  const sideBar = document.getElementById("sidebar");
+
+  menuIcon.onclick = () => sideBar.classList.add("visible");
+  closeIcon.onclick = () => sideBar.classList.remove("visible");
 }
