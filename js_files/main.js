@@ -1,4 +1,4 @@
-import initiateGame from "./game.js";
+import {initiateGame, removeImg} from "./game.js";
 import setupAllSideElements from "./side_elements.js";
 import g from "./globals.js";
 

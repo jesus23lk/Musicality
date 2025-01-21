@@ -6,36 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = 'stylesheet' href = 'styles.css'>
     <title>Music Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=close,keyboard_arrow_down,keyboard_arrow_up,menu,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
   </head>
   <body>
     <!-- Side bar content-->
     <aside id="sidebar">
-      <span class="material-symbols-outlined" id="close-icon">close</span>
-      <button id = 'volume-btn' class = 'ui-btn'>
-        <img src = 'Images/volume-logo.png' id = 'volume-pic'>
-      </button>
-      <button id = 'help-btn' class = 'ui-btn'>
-        <img src = 'Images/question-mark.png' id = 'question-pic'>
-      </button>
-      <div id = 'max-container'>
-        <label for = 'max-select'>Highest Note</label>
-        <select id = 'max-select'></select>
+      <div class="sidebar-section">
+        <span>Close</span>
+        <span class="material-symbols-outlined" id="close-icon">close</span>
       </div>
-      <div id = 'min-container'>
-        <label for = 'min-select'>Lowest Note</label>
-        <select id = 'min-select'></select>
+      <div class="sidebar-section" id="volume-section">
+        <span>Volume</span>
+        <span class="material-symbols-outlined volume-icon">toggle_on</span>
       </div>
-      <button id = 'update-btn'>Update</button>
-      <button id = 'reset-btn'>Reset</button>
-      <p id = 'error-msg'></p>      
+      <div class="sidebar-section" id="note-range-section">
+        <span>Note Range</span>
+        <span class="material-symbols-outlined arrow-icon">keyboard_arrow_down</span>
+        <div class="note-range-container" data-visible="false">
+          <div class = 'select-container'>
+            <label for = 'max-select'>Highest Note</label>
+            <select id = 'max-select'></select>
+          </div>
+          <div class = 'select-container'>
+            <label for = 'min-select'>Lowest Note</label>
+            <select id = 'min-select'></select>
+          </div>
+          <button id = 'update-btn'>Update</button>
+          <button id = 'reset-btn'>Reset</button>
+          <p id = 'error-msg'></p>      
+        </div>
+      </div>
     </aside>
+
     <!-- main content-->
     <div id = 'page'>
-      <header id="page-header">
-        <nav>
-          <span class="material-symbols-outlined" id="menu-icon">menu</span>
-        </nav>
+      <header class="page-header">
+        <span class="material-symbols-outlined" id="menu-icon">menu</span>
       </header>
       <div id = 'center-area'>
         <div id = 'canvas'>

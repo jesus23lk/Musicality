@@ -1,3 +1,5 @@
+import g from './globals.js';
+import { removeImg, pickLocation } from './game.js';
 
 function setupDropDowns() {
 
@@ -117,7 +119,7 @@ function updateMinMax() {
 
     errorMsg.textContent = "Error: lowest note cannot be higher than highest note";
 
-    errorState = true;
+    g.errorState = true;
 
     removeImg();                    //When in an error state, we want to remove the note image and not accept user input
   }
@@ -126,7 +128,7 @@ function updateMinMax() {
 
     errorMsg.textContent = "Error: lowest note cannot be equal to highest note";      
 
-    errorState = true;
+    g.errorState = true;
 
     removeImg();                    //When in an error state, we want to remove the note image and not accept user input
   }
@@ -135,7 +137,7 @@ function updateMinMax() {
 
     errorMsg.textContent = '';
     
-    if(errorState) errorState = false;              //exit error state
+    if(g.errorState) g.errorState = false;              //exit error state
     
     else removeImg();                                                  //We only want to remove the image if we aren't in an error state
 
@@ -161,7 +163,7 @@ function resetMinMax() {
   msgBanner.style.backgroundColor = 'rgb(128, 128, 128)';               //Hide message banner
   msgBanner.textContent = "Press a key or click a button";
 
-  if(errorState) errorState = false;                                           //Exit error state
+  if(g.errorState) g.errorState = false;                                           //Exit error state
 
   else removeImg();                                               //If we aren't in an error state, then remove the note image
 
@@ -179,23 +181,21 @@ function resetMinMax() {
 
 function setupVolume() {
 
-  const volumePic = document.getElementById('volume-pic');
+  const volumeSection = document.getElementById('volume-section');
+  const volumeIcon = document.querySelector('.volume-icon');
   
-  
-  volumePic.onclick = () => {
+  volumeSection.addEventListener('click', () => {
     
     if(g.volumeOn) {
-      sounds.click.play();
+      volumeIcon.textContent = 'toggle_off';
       g.volumeOn = false;
-      volumePic.src = 'Images/no-volume-logo.png';
     }
     
     else {
-      sounds.click.play();
+      volumeIcon.textContent = 'toggle_on';
       g.volumeOn = true;
-      volumePic.src = 'Images/volume-logo.png';
     }
-  }
+  });
 }
 
 function setupHelpModal() {
@@ -208,7 +208,7 @@ function setupHelpModal() {
   closeHelp.onclick = () => { helpModal.close() }
 }
 
-function setupSidebar() {
+function setupLeftSidebar() {
 
   const menuIcon = document.getElementById("menu-icon");
   const closeIcon = document.getElementById("close-icon");
@@ -218,15 +218,39 @@ function setupSidebar() {
   closeIcon.onclick = () => sideBar.classList.remove("visible");
 }
 
+function setupNoteRange() {
+
+  const noteRangeSec = document.querySelector('.note-range-container');
+  const arrowIcon = document.querySelector('.material-symbols-outlined.arrow-icon');
+
+  document.getElementById('note-range-section').addEventListener('click', () => {
+
+    if(noteRangeSec.dataset.visible === 'false') {
+      noteRangeSec.classList.add('visible');
+      arrowIcon.textContent = 'keyboard_arrow_up';
+      noteRangeSec.dataset.visible = 'true';
+    }
+    
+    else {
+      noteRangeSec.classList.remove('visible');
+      arrowIcon.textContent = 'keyboard_arrow_down';
+      noteRangeSec.dataset.visible = 'false';
+    }
+  })
+}
+
 function setupAllSideElements() {
 
   setupDropDowns();                           //Sets up drop down menus to change highest and lowest notes
 
   setupVolume();                            //Sets up the volume button to disable an enable volume
 
-  setupHelpModal();
+  // setupHelpModal();
 
-  setupSidebar();
+  setupLeftSidebar();
+
+
+  setupNoteRange();
 }
 
 export default setupAllSideElements;

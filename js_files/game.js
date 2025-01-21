@@ -188,4 +188,4 @@ function initiateGame() {
 }
 
 
-export default initiateGame;
+export {initiateGame, removeImg, pickLocation};
