@@ -8,11 +8,11 @@
 }
 
 body {
-  height: 2000px
+  height: 1000px
 }
 
 #sidebar {
-  height: 100vh;
+  height: 100%;
   position: fixed;
   background-color: rgb(67, 67, 67);
   width: 18vw;
@@ -21,13 +21,17 @@ body {
   z-index: 3;
 }
 
+#sidebar.visible {
+  left: 0;
+}
+
 .sidebar-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5em;
   height: 50px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: white;
   cursor: pointer;
   position: relative;
@@ -116,10 +120,6 @@ body {
 
 #settings-sidebar.visible {
   right: 0;
-}
-
-#sidebar.visible {
-  left: 0;
 }
 
 .page-header {

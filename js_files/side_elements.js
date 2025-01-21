@@ -211,11 +211,11 @@ function setupHelpModal() {
 function setupLeftSidebar() {
 
   const menuIcon = document.getElementById("menu-icon");
-  const closeIcon = document.getElementById("close-icon");
+  const closeSection = document.querySelector(".close-section");
   const sideBar = document.getElementById("sidebar");
 
   menuIcon.onclick = () => sideBar.classList.add("visible");
-  closeIcon.onclick = () => sideBar.classList.remove("visible");
+  closeSection.onclick = () => sideBar.classList.remove("visible");
 }
 
 function setupNoteRange() {
