@@ -169,6 +169,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 /* Canvas is pretty much a measure of music
@@ -237,18 +238,18 @@ body {
 /* Image of treble clef */
 #t-pic {                  
   height: 110px;
-  position: relative;
-  bottom: 425px;
-  left: -270px;
+  position: absolute;
+  left: -5px;
+  top: 125px;
   z-index: 2;
 }
 
 /* Image of bass clef */
 #b-pic {                            
   height: 52px;
-  position: relative;
-  bottom: 420px;
-  right: 260px;
+  position: absolute;
+  left: 10px;
+  top: 243px;
   z-index: 2;
 }
 
@@ -273,12 +274,31 @@ body {
   color: white;
   cursor: pointer;
   font-weight: 700;
-  box-shadow: 2px 2px 8px rgb(147, 147, 147);
-                       
+  box-shadow: 2px 2px 8px rgb(147, 147, 147);                      
 }
 
 .btn:hover {
-  background-color: rgb(65, 56, 198);
+  /* background-color: rgb(87, 159, 196); */
+}
+
+.btn-correct{
+  animation: 1000ms 1 normal correctbtn;
+}
+
+.btn-wrong {
+  animation: 1000ms 1 normal wrongbtn;
+}
+
+@keyframes correctbtn {
+  0% {   background-color: rgb(103, 190, 234);}
+  10% { background-color: green;};
+  100% {   background-color: rgb(103, 190, 234);}
+}
+
+@keyframes wrongbtn {
+  0% {   background-color: rgb(103, 190, 234);}
+  10% { background-color: red;};
+  100% {   background-color: rgb(103, 190, 234);}
 }
 
 #msg-banner {  
@@ -437,8 +457,8 @@ body {
   /* Image of bass clef */
   #b-pic {                            
     height: 52px;
-    position: relative;
-    bottom: 550px;
+    position: absolute;
+    bottom: 300px;
     right: 110px;
   }
 

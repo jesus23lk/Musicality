@@ -110,7 +110,6 @@ function pickLocation() {
 
 }
 
-
 function removeImg() {
 
   g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
@@ -130,61 +129,72 @@ function removeImg() {
   }
 }
 
-function evaluateChoice(e) {
-
-  //Called when user clicks an A-G button or when they press a key
-
-  if(g.errorState) return;        //If in an error state, we want to disable user input by exiting this function
-
-  let choice;                                             //Choice can either be the value of a button or the value of a keyboard key
-
-  if(e.target.className) choice = e.target.noteVal;              //Checks if user clicked a button by checking if the event target has a class
-
-  else {
-    /*Conditional entered when user pressed a key
-      because keys don't have css classes*/
-
-    choice = e.key.toUpperCase();       
-    
-    /*We only want to accept the keys: A, B, C, D, E, F, G as input and nothing else
-      Choice[1] means the name of the key pressed has more than one character in it so it can't be a letter.
-      The other two options just hone in on the range we set being A-G */
-
-    if(choice[1] || choice.charCodeAt(0) < 65 || choice.charCodeAt(0) > 71) return;
+function giveFeedback(choice) {
+  //Tell user if clicked answer is right or wrong
+  
+  const btns = document.querySelectorAll('.btn');
+  let btn;
+  
+  for (btn of btns) {
+    if (btn.noteVal === choice) break;
   }
 
-  //Save current note's value
   const correctAns = g.noteDiv.noteVal;                        
-  const banner = document.getElementById('msg-banner');          
 
-  //Show banner
-  banner.style.display = 'flex';                               
+  if (choice === correctAns) {
+    if(g.volumeOn) g.sounds.correct.play();
+    
+    //correct animation
+    btn.classList.add('btn-correct');
+    btn.addEventListener('animationend', () => btn.classList.remove('btn-correct'));
 
-  if(choice === correctAns) {                                    //Entered if user guessed correctly
-    if(g.volumeOn) g.sounds.correct.play();                               //Only play sound if volume is on 
-    banner.style.backgroundColor = 'rgb(42, 135, 42)';
-    banner.textContent = 'Correct!';
+    //Move note to new location
+    removeImg();                            
+    g.noteDiv = pickLocation();             
 
-    removeImg();                                                //If player got the right answer, we need to remove the note img from where it's currently at
-    g.noteDiv = pickLocation();                              //And spawn a new note in a different location
   }
-
-  else  {                                                       //Entered if user guessed incorrectly
+  
+  else {
     if(g.volumeOn) g.sounds.wrong.play();                              
-    banner.style.backgroundColor = 'rgb(198, 51, 51)';
-    banner.textContent = 'Try Again!';
+    btn.classList.add('btn-wrong');
+    btn.addEventListener('animationend', () => btn.classList.remove('btn-wrong'));
   }
 
 }
 
+function evaluateChoice(e) {
+
+  //Called when user clicks an A-G button or when they press a key
+
+  //Disable input when in error state
+  if(g.errorState) return;        
+
+  //user input, button or keyboard key
+  let choice; 
+
+  //Check if a button was clicked 
+  if(e.target.className) choice = e.target.noteVal;              
+
+  else {
+
+    choice = e.key.toUpperCase();       
+    
+    //Check if key pressed  is A-G
+    if(choice[1] || choice.charCodeAt(0) < 65 || choice.charCodeAt(0) > 71) return;
+  }
+
+  giveFeedback(choice);
+}
+
 function initiateGame() {
 
-  setupBtns();                          
+  setupBtns();       
+
   //Starts game by putting note in random location
   g.noteDiv = pickLocation();        
+
   //Functionality for key presses
   document.addEventListener('keydown', evaluateChoice);
-
 }
 
 

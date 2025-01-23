@@ -1,15 +1,6 @@
-import {initiateGame, removeImg} from "./game.js";
+import {initiateGame} from "./game.js";
 import setupAllSideElements from "./side_elements.js";
 import g from "./globals.js";
-
-window.onload = function() {
-
-  //Setup the page
-  createLocations();                    
-  initiateGame();
-  setupAllSideElements();
-
-}
 
 function createLocations() {
 
@@ -54,3 +45,11 @@ function createLocations() {
 
 }
 
+window.onload = function() {
+
+  //Setup the page
+  createLocations();                    
+  initiateGame();
+  setupAllSideElements();
+
+}
