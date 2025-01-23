@@ -148,10 +148,7 @@ function updateMinMax() {
 
 
   }
-
-
 }
-
 function resetMinMax() {
 
   /* entered when user clicks reset button to reset highest and lowest notes */
@@ -198,24 +195,26 @@ function setupVolume() {
   });
 }
 
-function setupHelpModal() {
-
-  const helpModal = document.getElementById("help-modal");
-  const closeHelp = document.getElementById("close-help");
-  const helpBtn = document.getElementById("help-btn");
-
-  helpBtn.onclick = () => {helpModal.showModal() }
-  closeHelp.onclick = () => { helpModal.close() }
-}
-
 function setupLeftSidebar() {
 
   const menuIcon = document.getElementById("menu-icon");
   const closeSection = document.querySelector(".close-section");
   const sideBar = document.getElementById("sidebar");
+  const cover = document.querySelector('.cover');
 
-  menuIcon.onclick = () => sideBar.classList.add("visible");
-  closeSection.onclick = () => sideBar.classList.remove("visible");
+  cover.addEventListener('click',() => {
+    sideBar.classList.remove('visible');
+    cover.style.display = 'none';
+  });
+
+  menuIcon.onclick = () => {
+    sideBar.classList.add("visible");
+    cover.style.display = 'block';
+  }
+  closeSection.onclick = () => {
+    sideBar.classList.remove("visible");
+    cover.style.display = 'none';
+  }
 }
 
 function setupNoteRange() {
@@ -223,7 +222,14 @@ function setupNoteRange() {
   const noteRangeSec = document.querySelector('.note-range-container');
   const arrowIcon = document.querySelector('.material-symbols-outlined.arrow-icon');
 
-  document.getElementById('note-range-section').addEventListener('click', () => {
+  document.getElementById('note-range-section').addEventListener('click', (e) => {
+
+    if (e.target.closest('.note-range-container')) {
+      
+      console.log('hello');
+      return;  
+
+    }
 
     if(noteRangeSec.dataset.visible === 'false') {
       noteRangeSec.classList.add('visible');
