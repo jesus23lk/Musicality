@@ -94,11 +94,6 @@ function updateMinMax() {
 
   /* Entered when user clicks update button to update lowest and highest note values */
 
-  const msgBanner = document.getElementById('msg-banner')
-  msgBanner.style.backgroundColor = 'rgb(128, 128, 128)';               //Hide message banner
-  msgBanner.textContent = "Press a key or click a button";
-  
-
   const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
   const minSelect = document.getElementById('min-select');       //Drop down selector for min note
 
@@ -152,13 +147,6 @@ function updateMinMax() {
 function resetMinMax() {
 
   /* entered when user clicks reset button to reset highest and lowest notes */
-
-  const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
-  errorMsg.textContent = '';
-
-  const msgBanner = document.getElementById('msg-banner')
-  msgBanner.style.backgroundColor = 'rgb(128, 128, 128)';               //Hide message banner
-  msgBanner.textContent = "Press a key or click a button";
 
   if(g.errorState) g.errorState = false;                                           //Exit error state
 

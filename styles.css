@@ -140,6 +140,7 @@ body {
   align-items: center;
   padding: 0.5em;
   background-color: rgb(67, 67, 67);
+  box-shadow: 2px 2px 8px rgb(147, 147, 147);                      
 
 }
 
@@ -192,14 +193,21 @@ body {
 /* staff div is immediate parent of all lines and spaces*/
 #staff {
   width: 595px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ledger-line, .line {
-  width: 100%;
   height: 2px;
-  background-color: black;
   position: relative;
   z-index: 1;
+}
+
+.line {
+  width: 100%;
+  background-color: black;
+  
 }
 
 .ledger-space, .space {
@@ -213,26 +221,30 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: white;
-}
-.empty-l {
-  height: 100%;
-  width: 248px;
-  background-color: #ffffff;
-}
-
-.empty-r {
-  height: 100%;
-  width: 308px;
-  background-color: white;
+  width: 6%;
 }
 
 /* Corresponds to single quarter note image */
 #note {                                       
   height: 95px;
-  left: 220px;
   position: absolute;
   z-index: 2;
+}
+
+/* Here we need to change our note position based on where it lands */
+#note.on-ledger {
+  bottom: -22px;
+  left: -29px;
+}
+
+#note.on-line {
+  bottom: -22px;
+  left: 250px;
+}
+
+#note.on-space {
+  bottom: -17px;
+  left: 249px;
 }
 
 /* Image of treble clef */
@@ -361,90 +373,87 @@ body {
 
 @media (max-width: 500px) {
 
+  #menu-icon {
+    font-size: 1.rem !important;
+  }
+
   #canvas {
-    display: flex;
-    flex-direction: row;
     width: 300px;
   }
 
   #center-area {
-    width: 300px
+    width: 300px;
   }
-  
-  /* Class for two lines on the left and right side of the staff */
+
   .vertical-line {
-    top: 144px;
-    position: relative;
-    height: 162px;
-    width: 3.5px;
-    background-color: black;
+    top: 108px;
+    height: 122px;
   }
   
-  /* staff div is immediate parent of all lines and spaces*/
-  #staff {
-    width: 299px;
-  }
 
-  .empty-l {
-    height: 100%;
-    width: 200px;
-    background-color: #ffffff;
+  .ledger-line, .line {
+    height: 2px
   }
   
-  .empty-r {
-    height: 100%;
-    width: 55px;
-    background-color: white;
+  .line {
+    
   }
-
+  
+  .ledger-space, .space {
+    height: 10px
+  }
+  
+  .ledger-line {
+    width: 8%;
+  }
+  
+  
   /* Div that holds our 8 buttons */
   #btn-container {                    
-    width: 100%;
-    height: 200px;
-    display: flex;
-    flex-direction: row;
+    height: auto;
     justify-content: space-around;
-    margin-bottom: 1em;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .btn {                            
-    width: 30%;
-    height: 60px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    background-color: rgb(103, 190, 234);
-    color: white;
-    cursor: pointer;
-    font-weight: 900;                       
-  }
-  
-  .btn:hover {
-    background-color: rgb(65, 56, 198);
+    width: 30%; 
+    height: 40px;
+    margin-bottom: 1em;
   }
   
   /* Corresponds to single quarter note image */
-  #note {                                       
-    height: 95px;
-    left: 172px;
-    position: absolute;
+  #note {
+    height: 65px;
   }
 
+  /* Here we need to change our note position based on where it lands */
+  #note.on-ledger {
+    bottom: -15px;
+    left: -21px;
+  }
+
+  #note.on-line {
+    bottom: -15px;
+    left: 115px;
+  }
+
+  #note.on-space {
+    bottom: -11px;
+    left: 116px;
+  }
+
+
   /* Image of treble clef */
-  #t-pic {                  
-    height: 110px;
-    position: relative;
-    bottom: 555px;
-    left: -120px;
+  #t-pic {
+    height: 85px;
+    top: 94px;                  
   }
 
   /* Image of bass clef */
-  #b-pic {                            
-    height: 52px;
-    position: absolute;
-    bottom: 300px;
-    right: 110px;
+  #b-pic {
+    height: 38px;
+    top: 180px;                            
   }
 
   #sidebar {

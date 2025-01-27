@@ -100,10 +100,12 @@ function pickLocation() {
   note.id = 'note';
   locDiv.appendChild(note);
 
-  if(locDiv.className === 'line' || locDiv.className === 'ledger-line') note.style.bottom = '-22px';
+  if(locDiv.className === 'ledger-line') note.classList.add('on-ledger');
   
-  else note.style.bottom = '-17px';
-
+  else if (locDiv.className === 'line') note.classList.add('on-line');
+  
+  else note.classList.add('on-space');
+  
   //Finally return the div that contains our note
 
   return locDiv;
@@ -113,8 +115,11 @@ function pickLocation() {
 function removeImg() {
 
   g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
+  g.noteImg.classList.remove('on-ledger');
+  g.noteImg.classList.remove('on-line');
+  g.noteImg.classList.remove('on-space');
 
-  if(g.noteDiv.className === 'ledger-line') g.noteDiv.style.backgroundColor = 'white';      //If the current location is a ledger-line, then we need to hide it
+  if(g.noteDiv.className === 'ledger-line') g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
 
   if(g.extraLines) {
 
@@ -123,7 +128,7 @@ function removeImg() {
 
     for(let i = 0; i < g.extraLines.length; i++) {
 
-      g.extraLines[i].style.backgroundColor = 'white';
+      g.extraLines[i].style.backgroundColor = 'transparent';
 
     }
   }
@@ -131,7 +136,7 @@ function removeImg() {
 
 function giveFeedback(choice) {
   //Tell user if clicked answer is right or wrong
-  
+
   const btns = document.querySelectorAll('.btn');
   let btn;
   

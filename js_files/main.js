@@ -18,8 +18,6 @@ function createLocations() {
       if(i < 17 || i > 39 || i === 28) {      //Ledger lines above treble clef, below bass clef, and middle C
 
         curChild.className = 'ledger-line';
-        curChild.innerHTML = `<div class = 'empty-l'></div>
-                              <div class = 'empty-r'></div>`;
       }
 
       else curChild.className = 'line';
