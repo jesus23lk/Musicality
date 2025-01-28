@@ -417,7 +417,6 @@ it contains first a vertical measure line, then the staff, then another vertical
     width: 4px;
     height: 122px;
   }
-  
 
   .ledger-line, .line {
     height: 2px
@@ -432,7 +431,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   }
   
   .ledger-line {
-    width: 8%;
+    width: 9%;
   }
   
   
@@ -458,7 +457,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   /* Here we need to change our note position based on where it lands */
   #note.on-ledger {
     bottom: -15px;
-    left: -22px;
+    left: -21px;
   }
   
   #note.on-line {
@@ -468,7 +467,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   
   #note.on-space {
     bottom: -11px;
-    left: 96px;
+    left: 94px;
   }
 
   #note.upside-down.on-ledger {
@@ -477,7 +476,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   
   #note.upside-down.on-space {
     bottom: -44px;
-    left: 97px;
+    left: 94px;
   }
 
 
