@@ -13,8 +13,8 @@ body {
 }
 
 .cover {
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 100vw;
   height: 100%;
   background-color: black;
   opacity: 40%;
@@ -95,6 +95,8 @@ body {
 }
 .note-range-container select {
   border-radius: 8px;
+  width: 65%;
+  height: 30px; 
 }
 
 #update-btn {
@@ -398,6 +400,15 @@ it contains first a vertical measure line, then the staff, then another vertical
 
   #menu-icon {
     font-size: 1.rem !important;
+  }
+
+  
+  #update-btn:hover {
+    background-color: rgb(71, 169, 41);
+  }
+
+  #reset-btn:hover {
+    background-color: rgb(223, 54, 54);
   }
 
   #canvas {
