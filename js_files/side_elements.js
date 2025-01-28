@@ -212,12 +212,7 @@ function setupNoteRange() {
 
   document.getElementById('note-range-section').addEventListener('click', (e) => {
 
-    if (e.target.closest('.note-range-container')) {
-      
-      console.log('hello');
-      return;  
-
-    }
+    if (e.target.closest('.note-range-container')) return;  
 
     if(noteRangeSec.dataset.visible === 'false') {
       noteRangeSec.classList.add('visible');

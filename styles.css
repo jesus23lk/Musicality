@@ -8,7 +8,8 @@
 }
 
 body {
-  height: 1000px
+  height: 1000px;
+  background-color: rgb(240, 240, 240);
 }
 
 .cover {
@@ -174,11 +175,16 @@ body {
 }
 
 /* Canvas is pretty much a measure of music
-   it contains first a vertical measure line, then the staff, then another vertical measure line */
+it contains first a vertical measure line, then the staff, then another vertical measure line */
 #canvas {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   width: 600px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgb(200, 200, 200);
 }
 
 /* Class for two lines on the left and right side of the staff */
@@ -196,6 +202,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .ledger-line, .line {
@@ -229,9 +236,11 @@ body {
   height: 95px;
   position: absolute;
   z-index: 2;
+  /* transform: rotate(180deg); */
 }
 
 /* Here we need to change our note position based on where it lands */
+
 #note.on-ledger {
   bottom: -22px;
   left: -29px;
@@ -239,45 +248,60 @@ body {
 
 #note.on-line {
   bottom: -22px;
-  left: 250px;
+  left: 230px;
 }
 
 #note.on-space {
   bottom: -17px;
-  left: 249px;
+  left: 230px;
+}
+
+#note.upside-down.on-ledger {
+  transform: rotate(180deg);
+  bottom: -70px;
+}
+
+#note.upside-down.on-space {
+  transform: rotate(180deg);
+  bottom: -64px;
 }
 
 /* Image of treble clef */
 #t-pic {                  
   height: 110px;
   position: absolute;
-  left: -5px;
-  top: 125px;
+  left: 14px;
+  top: 165px;
   z-index: 2;
 }
 
 /* Image of bass clef */
 #b-pic {                            
-  height: 52px;
+  height: 51px;
   position: absolute;
-  left: 10px;
-  top: 243px;
+  left: 30px;
+  top: 280px;
   z-index: 2;
 }
 
 /* Div that holds our 8 buttons */
 #btn-container {                    
   width: 100%;
-  height: 70px;
+  height: 75px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1em;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(200, 200, 200);
+  padding: 0.8em;
+  border-radius: 15px;
 }
 
 /* Class that targets all of our 8 buttons */
 .btn {                            
-  width: 11.5%;
+  width: 12%;
   height: 100%;
   font-size: 1.2rem;
   border: none;
@@ -286,7 +310,6 @@ body {
   color: white;
   cursor: pointer;
   font-weight: 700;
-  box-shadow: 2px 2px 8px rgb(147, 147, 147);                      
 }
 
 .btn:hover {
@@ -384,9 +407,14 @@ body {
   #center-area {
     width: 300px;
   }
+  
+  #staff {
+    width: 262px;
+  }
 
   .vertical-line {
     top: 108px;
+    width: 4px;
     height: 122px;
   }
   
@@ -414,46 +442,55 @@ body {
     justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
+    gap: 0.5em;
   }
 
   .btn {                            
     width: 30%; 
     height: 40px;
-    margin-bottom: 1em;
   }
   
   /* Corresponds to single quarter note image */
   #note {
     height: 65px;
   }
-
+  
   /* Here we need to change our note position based on where it lands */
   #note.on-ledger {
     bottom: -15px;
-    left: -21px;
+    left: -22px;
   }
-
+  
   #note.on-line {
     bottom: -15px;
-    left: 115px;
+    left: 96px;
   }
-
+  
   #note.on-space {
     bottom: -11px;
-    left: 116px;
+    left: 96px;
+  }
+
+  #note.upside-down.on-ledger {
+    bottom: -48px;
+  }
+  
+  #note.upside-down.on-space {
+    bottom: -44px;
+    left: 97px;
   }
 
 
   /* Image of treble clef */
   #t-pic {
     height: 85px;
-    top: 94px;                  
+    top: 133px;                  
   }
 
   /* Image of bass clef */
   #b-pic {
     height: 38px;
-    top: 180px;                            
+    top: 221px;                            
   }
 
   #sidebar {

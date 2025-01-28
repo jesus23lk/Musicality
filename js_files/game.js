@@ -86,19 +86,21 @@ function pickLocation() {
 
   //Current location saved as previous location
   g.prevLocId = locId;
-
+  
   //Retrieve div that corresponds to our locId
   const locDiv = document.getElementById('loc-' + locId);
-
+  
   if (locDiv.className === 'ledger-line' || locDiv.className === 'ledger-space') showExtraLines(locDiv);      
-
+  
   //Everything below here pertains to our quarter note image
-
+  
   const note = document.createElement('img');                                   
   g.noteImg = note;                                          
   note.src = 'Images/quarter-note1.png';
   note.id = 'note';
   locDiv.appendChild(note);
+  
+  if (locId < 5) note.classList.add('upside-down')
 
   if(locDiv.className === 'ledger-line') note.classList.add('on-ledger');
   
@@ -118,6 +120,7 @@ function removeImg() {
   g.noteImg.classList.remove('on-ledger');
   g.noteImg.classList.remove('on-line');
   g.noteImg.classList.remove('on-space');
+  g.noteImg.classList.remove('upside-down');
 
   if(g.noteDiv.className === 'ledger-line') g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
 
