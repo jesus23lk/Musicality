@@ -479,32 +479,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   
   /* Corresponds to single quarter note image */
   #note {
-    height: 85px;
-  }
-  
-  /* Here we need to change our note position based on where it lands */
-  #note.on-ledger {
-    /* bottom: -15px;
-    left: -21px; */
-  }
-  
-  #note.on-line {
-    /* bottom: -15px;
-    left: 96px; */
-  }
-  
-  #note.on-space {
-    /* bottom: -11px;
-    left: 94px; */
-  }
-
-  #note.upside-down.on-ledger {
-    /* bottom: -48px; */
-  }
-  
-  #note.upside-down.on-space {
-    /* bottom: -44px;
-    left: 94px; */
+    height: 86px;
   }
 
   /* Image of treble clef */
@@ -540,6 +515,10 @@ it contains first a vertical measure line, then the staff, then another vertical
     outline: none;
     font-weight: 500;
     font-size: 1.1rem;
+  }
+
+  .done-modal button {
+    height: 30%;
   }
 
 }
