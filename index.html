@@ -52,15 +52,18 @@
           <div id = 'staff'></div>
           <div class = 'vertical-line'></div>
         </div>
+        <div class="note-number-container"></div>
         <div id = 'btn-container'></div>
         <!-- <div id = 'msg-banner'>Press a key or click</div> -->
         <img src = 'Images/treble-clef.png' id = 't-pic'>
         <img src = 'Images/bass-clef.png' id = 'b-pic'>      
       </div>
     </div>
-    <dialog id="help-modal">
-      <p>Press the A-G keys on your keyboard to guess a note or click the A-G buttons to guess a note</p>
-      <button id="close-help">Close</button>
+    <dialog class="done-modal">
+      <span>
+          Congrats! you studied all the notes within your specified range!
+      </span>
+      <button class="restart-game-btn">Restart</button>
     </dialog>
     <script src = './js_files/main.js' type="module"></script>
   </body>

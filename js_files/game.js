@@ -72,21 +72,68 @@ function showExtraLines(locDiv) {
 
 }
 
-function pickLocation() {
-  
-  //Location id of note (integer 0-42)
-  let locId;                        
+function generateSequence() {
 
-  //do while loop is here to make sure our note is not in the same place twice 
-  do {                              
-     //Get random number in the range 0-42 (inclusive) 
-    locId = getRandom(g.highestNote, g.lowestNote);      
+  const sequence = [];
+
+  // Make an array with numbers in our note range
+  let j = 0;
+  for (let i = g.highestNote; i <= g.lowestNote; i++) {
+    sequence[j] = i;
+    j++;
   }
-  while (locId === g.prevLocId);     /* Keep looping if the random location we got is the same as our previous location*/
 
-  //Current location saved as previous location
-  g.prevLocId = locId;
-  
+  //Implement the fisher yates algorithm for random sequence
+  for (let i = sequence.length - 1; i > 0; i--) {
+
+    const randIndx = getRandom(0, i);
+
+    // Swap array values using destructuring
+    [sequence[i], sequence[randIndx]] = [sequence[randIndx], sequence[i]];
+
+  }
+
+  g.sequenceLength = sequence.length;
+  g.currentSequence = sequence;
+}
+
+function endGame() {
+
+  const doneModal = document.querySelector('.done-modal');
+  doneModal.showModal();
+
+  // Disable user input
+  g.errorState = true;
+}
+
+function setupRestartBtn() {
+
+  const restartBtn = document.querySelector('.restart-game-btn');
+
+  restartBtn.addEventListener('click', () =>{
+
+    //Reset everything
+    const doneModal = document.querySelector('.done-modal');
+    doneModal.close();
+    g.errorState = false;
+    g.sequenceNum = 1;
+    generateSequence();
+    g.noteDiv = getNextLocation();
+  });
+}
+
+function getNextLocation() {
+
+  if (g.sequenceNum > g.sequenceLength) {
+    endGame();
+    return;
+  }
+
+  const noteNumDiv = document.querySelector('.note-number-container');
+  noteNumDiv.textContent = `${g.sequenceNum}/${g.sequenceLength}`;
+
+  let locId = g.currentSequence.pop();
+
   //Retrieve div that corresponds to our locId
   const locDiv = document.getElementById('loc-' + locId);
   
@@ -96,30 +143,18 @@ function pickLocation() {
   
   const note = document.createElement('img');                                   
   g.noteImg = note;                                          
-  note.src = 'Images/quarter-note1.png';
+  note.src = 'Images/quarter_note.png';
   note.id = 'note';
   locDiv.appendChild(note);
   
   if (locId < 5) note.classList.add('upside-down')
 
-  if(locDiv.className === 'ledger-line') note.classList.add('on-ledger');
-  
-  else if (locDiv.className === 'line') note.classList.add('on-line');
-  
-  else note.classList.add('on-space');
-  
-  //Finally return the div that contains our note
-
   return locDiv;
-
 }
 
 function removeImg() {
 
   g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
-  g.noteImg.classList.remove('on-ledger');
-  g.noteImg.classList.remove('on-line');
-  g.noteImg.classList.remove('on-space');
   g.noteImg.classList.remove('upside-down');
 
   if(g.noteDiv.className === 'ledger-line') g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
@@ -158,8 +193,8 @@ function giveFeedback(choice) {
 
     //Move note to new location
     removeImg();                            
-    g.noteDiv = pickLocation();             
-
+    g.sequenceNum++;
+    g.noteDiv = getNextLocation();             
   }
   
   else {
@@ -172,38 +207,50 @@ function giveFeedback(choice) {
 
 function evaluateChoice(e) {
 
-  //Called when user clicks an A-G button or when they press a key
+  if (g.errorState) return;
 
-  //Disable input when in error state
-  if(g.errorState) return;        
+  let choice;
 
-  //user input, button or keyboard key
-  let choice; 
-
-  //Check if a button was clicked 
-  if(e.target.className) choice = e.target.noteVal;              
-
-  else {
-
-    choice = e.key.toUpperCase();       
-    
-    //Check if key pressed  is A-G
-    if(choice[1] || choice.charCodeAt(0) < 65 || choice.charCodeAt(0) > 71) return;
+  // Case 1: Button was clicked (mouse/touch)
+  if (e.type === 'click' && e.target.classList.contains('btn')) {
+    console.log('hello');
+    choice = e.target.noteVal;
   }
+
+  // Case 2: Key was pressed (global listener)
+  else if (e.type === 'keydown') {
+    const key = e.key.toUpperCase();
+
+    // Check if key is A-G (single character, ASCII 65-71)
+    if (key.length !== 1 || key < 'A' || key > 'G') return;
+
+    // If the focused element is a button, prevent its default keyboard behavior
+    if (document.activeElement?.classList?.contains('.btn')) {
+      e.preventDefault();
+    }
+
+    choice = key;
+  }
+
+  // Ignore other events
+  else return;
 
   giveFeedback(choice);
 }
 
 function initiateGame() {
 
-  setupBtns();       
+  setupBtns();
 
-  //Starts game by putting note in random location
-  g.noteDiv = pickLocation();        
+  generateSequence();
+
+  g.noteDiv = getNextLocation();
 
   //Functionality for key presses
   document.addEventListener('keydown', evaluateChoice);
+
+  setupRestartBtn();
 }
 
 
-export {initiateGame, removeImg, pickLocation};
+export {initiateGame, removeImg, getNextLocation, generateSequence};

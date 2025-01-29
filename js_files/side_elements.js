@@ -1,5 +1,5 @@
 import g from './globals.js';
-import { removeImg, pickLocation } from './game.js';
+import { removeImg, getNextLocation, generateSequence } from './game.js';
 
 function setupDropDowns() {
 
@@ -70,6 +70,7 @@ function setupDropDowns() {
     maxSelect.appendChild(maxOption);                                   //Add each option to its corresponding selector
     minSelect.appendChild(minOption);
     
+    //! You shouldn't hardcode these values here, rather you should set the to what they are in g
     if(i === 11) maxOption.selected = 'selected' ;                      /* Defiens the default value of the highest note
                                                                           which is F6 */
 
@@ -94,29 +95,23 @@ function updateMinMax() {
 
   /* Entered when user clicks update button to update lowest and highest note values */
 
-  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
-  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+  const maxSelect = document.getElementById('max-select');      
+  const minSelect = document.getElementById('min-select');      
 
-  /* Two lines of code below retrieve the <option> elements for the
-    user-selected lowest and highest notes */
-
+  /* Retrieve the <option> elements with current lowest and highest notes */
   const maxOption = maxSelect.options[maxSelect.selectedIndex];          
   const minOption = minSelect.options[minSelect.selectedIndex];
 
-  /* Lowest note cannot be greater than highest note.
-    It also cannot be equal to highest note.
-    The conditionals below are there to check for that.
-    If this does happen then we enter an error state */
+  /* Check that lowest note is not greater than or equal to highest note */
+  const errorMsg = document.getElementById('error-msg');                    
 
-  const errorMsg = document.getElementById('error-msg');                    // <p> that is used to display error message
-
-  if(minOption.idNum < maxOption.idNum)  {                                  
+  if(minOption.idNum < maxOption.idNum)  {                                 
 
     errorMsg.textContent = "Error: lowest note cannot be higher than highest note";
 
+    //Go into error state to reject user input
     g.errorState = true;
-
-    removeImg();                    //When in an error state, we want to remove the note image and not accept user input
+    removeImg();                    
   }
 
   else if (minOption.idNum === maxOption.idNum) {                         
@@ -124,26 +119,30 @@ function updateMinMax() {
     errorMsg.textContent = "Error: lowest note cannot be equal to highest note";      
 
     g.errorState = true;
-
-    removeImg();                    //When in an error state, we want to remove the note image and not accept user input
+    removeImg();                    
   }
 
-  else {              //Entered when user picks legal values for highest and lowest notes
+  //When user picks legal values
+  else {           
 
     errorMsg.textContent = '';
     
-    if(g.errorState) g.errorState = false;              //exit error state
+    //exit error state
+    if(g.errorState) g.errorState = false;              
     
-    else removeImg();                                                  //We only want to remove the image if we aren't in an error state
+    else removeImg();                                                  
 
-    g.highestNote = maxOption.idNum;               //Finally change the actual highest note value
-    g.lowestNote = minOption.idNum;                //Finally change the actual lowest note value
+    //Finally change highest and lowest notes
+    g.highestNote = maxOption.idNum;               
+    g.lowestNote = minOption.idNum;                
 
-    g.noteDiv = pickLocation();                              //Spawn a new note in a different location that adheres to our new lowest and highest
-
-
+    //Reset everything
+    g.sequenceNum = 1;
+    generateSequence();
+    g.noteDiv = getNextLocation();                             
   }
 }
+
 function resetMinMax() {
 
   /* entered when user clicks reset button to reset highest and lowest notes */
@@ -152,16 +151,21 @@ function resetMinMax() {
 
   else removeImg();                                               //If we aren't in an error state, then remove the note image
 
-  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
-  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+  const maxSelect = document.getElementById('max-select');       
+  const minSelect = document.getElementById('min-select');    
 
-  maxSelect.options[11].selected = 'selected';                 //Return highest note selector to its defualt value
-  minSelect.options[45].selected = 'selected';                //Return lowest note selector to its default value
+  // Return lowest and highest note selectors to their default values
+  maxSelect.options[11].selected = 'selected';                 
+  minSelect.options[45].selected = 'selected';                
 
-  g.highestNote = 11;                                   //Reset lowest and highest note values
+  //Reset global highest and lowest
+  g.highestNote = 11;              
   g.lowestNote = 45;
 
-  g.noteDiv = pickLocation();
+  //Start the game again
+  g.sequenceNum = 1;
+  generateSequence();
+  g.noteDiv = getNextLocation();                              
 }
 
 function setupVolume() {
@@ -234,10 +238,7 @@ function setupAllSideElements() {
 
   setupVolume();                            //Sets up the volume button to disable an enable volume
 
-  // setupHelpModal();
-
   setupLeftSidebar();
-
 
   setupNoteRange();
 }
