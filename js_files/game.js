@@ -250,8 +250,6 @@ function initiateGame() {
   document.addEventListener('keydown', evaluateChoice);
 
   setupRestartBtn();
-
-  endGame();
 }
 
 
