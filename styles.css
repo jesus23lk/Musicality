@@ -266,13 +266,37 @@ it contains first a vertical measure line, then the staff, then another vertical
   z-index: 2;
 }
 
-.note-number-container {
-  height: 30px;
-  width: 45%;
-  background-color: white;
+.hud-section {
   margin-top: 15px;
-  border-radius: 15px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hud-note-range, .mistakes-count {
+  background-color: white;
   box-shadow: 5px 5px 10px rgb(200, 200, 200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 13%;
+  border-radius: 10px;
+  font-weight: 600;
+  gap: 0.3rem;
+}
+
+.cancel-icon {
+  color: red;
+  font-size: 1.2rem !important;
+  font-variation-settings: 'wght' 600;
+}
+
+.note-number-container {
+  width: 40%;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(200, 200, 200);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,7 +315,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   background-color: white;
   box-shadow: 5px 5px 10px rgb(200, 200, 200);
   padding: 0.8em;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 /* Class that targets all of our 8 buttons */
@@ -467,9 +491,17 @@ it contains first a vertical measure line, then the staff, then another vertical
     margin-top: 10px;
   }
 
-  .note-number-container {
+  .hud-section {
     margin-top: 10px;
-    width: 60%;
+
+  }
+
+  .hud-note-range, .mistakes-count {
+    width: 20%;
+  }
+
+  .note-number-container {
+    width: 40%;
   }
 
   .btn {                            

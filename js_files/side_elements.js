@@ -137,6 +137,7 @@ function updateMinMax() {
     g.lowestNote = minOption.idNum;                
 
     //Reset everything
+    updateHudNoteRange();
     g.sequenceNum = 1;
     generateSequence();
     g.noteDiv = getNextLocation();                             
@@ -163,6 +164,7 @@ function resetMinMax() {
   g.lowestNote = 45;
 
   //Start the game again
+  updateHudNoteRange();
   g.sequenceNum = 1;
   generateSequence();
   g.noteDiv = getNextLocation();                              
@@ -232,6 +234,19 @@ function setupNoteRange() {
   })
 }
 
+function updateHudNoteRange() {
+  //Used to update note range in the hud
+
+  const hudNtRng = document.querySelector('.hud-note-range');
+
+  //Get indices for highest and lowest notes
+  const high = g.highestNote;
+  const low = g.lowestNote;
+
+  //Use indices on allPianoNotes array
+  hudNtRng.textContent = `${g.allPianoNotes[low] + '-' + g.allPianoNotes[high]}`;
+}
+
 function setupAllSideElements() {
 
   setupDropDowns();                           //Sets up drop down menus to change highest and lowest notes
@@ -241,6 +256,8 @@ function setupAllSideElements() {
   setupLeftSidebar();
 
   setupNoteRange();
+  
+  updateHudNoteRange();
 }
 
 export default setupAllSideElements;

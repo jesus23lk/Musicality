@@ -1,10 +1,12 @@
 const g = {
-  noteDiv: '',              //Actual div that holds the image note (either line or space)
+  //Location where note landed
+  noteDiv: '',              
   
-  //! This value has now been deprecated and can be removed
-  prevLocId: -1,              //Integer value in the inclusive range 0-42
-  
-  noteImg: '',              //Current note image, there is only one at any given time
+  //error variables for hud
+  firstError: true,
+  numErrors: 0,  
+
+  noteImg: '',            
   extraLines: [],
   
   highestNote: 11,          //Default highest note F6          
@@ -15,7 +17,7 @@ const g = {
   /* Used to populate lines and spaces noteval property */
   notes: ['C', 'B', 'A', 'G', 'F', 'E', 'D'],
 
-  // This array is not currently being used in the game, but it may come in handy later
+  //This array is now being used
   allPianoNotes: [
     "C8",
     "B7", "A7", "G7", "F7", "E7", "D7", "C7",

@@ -19,7 +19,7 @@ function setupBtns() {
     newBtn.className = 'btn';
     newBtn.textContent = notesAG[i];
     newBtn.noteVal = notesAG[i];                              //Each button gets a property named 'noteVal' that gets a value 'A'-'G'
-    newBtn.addEventListener('click', evaluateChoice);
+    newBtn.addEventListener('click', parseInput);
 
     btnDiv.appendChild(newBtn);                                
   }
@@ -102,6 +102,10 @@ function endGame() {
   const doneModal = document.querySelector('.done-modal');
   doneModal.showModal();
 
+  const points = g.sequenceLength - g.numErrors;
+  const scoreSpan = document.querySelector('.done-modal span');
+  scoreSpan.textContent = `${points + '/' + g.sequenceLength}`;
+
   // Disable user input
   g.errorState = true;
 }
@@ -115,6 +119,11 @@ function setupRestartBtn() {
     //Reset everything
     const doneModal = document.querySelector('.done-modal');
     doneModal.close();
+
+    g.firstError = true;
+    g.numErrors = 0;
+    document.querySelector('.mistakes-count span').textContent = 0;
+
     g.errorState = false;
     g.sequenceNum = 1;
     generateSequence();
@@ -172,7 +181,13 @@ function removeImg() {
   }
 }
 
-function giveFeedback(choice) {
+function incErrorCount() {
+  g.numErrors++;
+  document.querySelector('.mistakes-count span').textContent = g.numErrors;
+  g.firstError = false;
+}
+
+function evaluateChoice(choice) {
   //Tell user if clicked answer is right or wrong
 
   const btns = document.querySelectorAll('.btn');
@@ -184,7 +199,11 @@ function giveFeedback(choice) {
 
   const correctAns = g.noteDiv.noteVal;                        
 
+  //Case 1: correct answer 
   if (choice === correctAns) {
+
+    g.firstError = true;
+
     if(g.volumeOn) g.sounds.correct.play();
     
     //correct animation
@@ -197,7 +216,11 @@ function giveFeedback(choice) {
     g.noteDiv = getNextLocation();             
   }
   
+  //Case 2 wrong answer
   else {
+
+    if (g.firstError) incErrorCount();
+
     if(g.volumeOn) g.sounds.wrong.play();                              
     btn.classList.add('btn-wrong');
     btn.addEventListener('animationend', () => btn.classList.remove('btn-wrong'));
@@ -205,17 +228,14 @@ function giveFeedback(choice) {
 
 }
 
-function evaluateChoice(e) {
+function parseInput(e) {
 
   if (g.errorState) return;
 
   let choice;
 
   // Case 1: Button was clicked (mouse/touch)
-  if (e.type === 'click' && e.target.classList.contains('btn')) {
-    console.log('hello');
-    choice = e.target.noteVal;
-  }
+  if (e.type === 'click' && e.target.classList.contains('btn')) choice = e.target.noteVal;
 
   // Case 2: Key was pressed (global listener)
   else if (e.type === 'keydown') {
@@ -235,11 +255,11 @@ function evaluateChoice(e) {
   // Ignore other events
   else return;
 
-  giveFeedback(choice);
+  evaluateChoice(choice);
 }
 
 function initiateGame() {
-
+  
   setupBtns();
 
   generateSequence();
@@ -247,7 +267,7 @@ function initiateGame() {
   g.noteDiv = getNextLocation();
 
   //Functionality for key presses
-  document.addEventListener('keydown', evaluateChoice);
+  document.addEventListener('keydown', parseInput);
 
   setupRestartBtn();
 }
