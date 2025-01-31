@@ -6,7 +6,14 @@ import g from "./globals.js";
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 // random value in the range min-max (inclusive)
-const getRandom = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));         
+const getRandom = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
+
+const resetErrorCount = () => {
+
+  g.numErrors = 0;
+  g.firstError = true;
+  document.querySelector('.mistakes-count span').textContent = 0;
+}
 
 function setupBtns() {
   
@@ -74,6 +81,9 @@ function showExtraLines(locDiv) {
 
 function generateSequence() {
 
+  // Wanna do this everytime we restart the game
+  resetErrorCount();
+
   const sequence = [];
 
   // Make an array with numbers in our note range
@@ -119,10 +129,6 @@ function setupRestartBtn() {
     //Reset everything
     const doneModal = document.querySelector('.done-modal');
     doneModal.close();
-
-    g.firstError = true;
-    g.numErrors = 0;
-    document.querySelector('.mistakes-count span').textContent = 0;
 
     g.errorState = false;
     g.sequenceNum = 1;
