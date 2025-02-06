@@ -107,6 +107,64 @@ function generateSequence() {
   g.currentSequence = sequence;
 }
 
+function getColor(percent) {
+  //! Learn how this code works, later, don't just leave it here
+
+  const hue = (120 * percent); // Map 0-100% to 0-120° (red to green)
+
+  // if hue is more green, then we want less lightness, because super bright greens are ugly
+  const lightness = hue < 60 ? '50%' : '35%';
+
+  return `hsl(${hue}, 100%, ${lightness})`;
+}
+
+function drawScoreCircle(points) {
+
+  const canvas = document.querySelector('.score-circle');
+  const ctx = canvas.getContext('2d');
+
+  //Draw circle background in light gray
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  let radius = 60;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+  ctx.lineTo(centerX, centerY);
+  ctx.closePath();
+  ctx.fillStyle = 'rgb(215, 215, 215)';
+  ctx.fill();
+  
+  // Percentage of the circle to be filled here 0-1
+  let percent = points / g.sequenceLength;
+  let percent100 = Math.floor(percent * 100);
+  const startAngle = -Math.PI/2;
+  const endAngle = startAngle + Math.PI * 2 * percent;
+
+  // Draw colored progress circle
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+  ctx.lineTo(centerX, centerY);
+  ctx.closePath();
+  ctx.fillStyle = `${getColor(percent)}`;
+  ctx.fill();
+
+  // Draw white center circle
+  radius /= 1.3;
+  ctx.beginPath();
+  ctx.arc(centerX,centerY, radius, 0, Math.PI * 2, false);
+  ctx.lineTo(centerX, centerY);
+  ctx.closePath();
+  ctx.fillStyle = 'rgb(255, 255, 255)';
+  ctx.fill();
+
+  //Add text to center of circle
+  ctx.fillStyle = 'black';
+  ctx.font = '800 20px Arial';
+  ctx.textAlign = 'center'; 
+  ctx.textBaseline = 'middle'; 
+  ctx.fillText(`${percent100}%`, centerX, centerY);
+}
+
 function endGame() {
 
   const doneModal = document.querySelector('.done-modal');
@@ -118,6 +176,8 @@ function endGame() {
 
   // Disable user input
   g.errorState = true;
+
+  drawScoreCircle(points);
 }
 
 function setupRestartBtn() {
@@ -277,6 +337,5 @@ function initiateGame() {
 
   setupRestartBtn();
 }
-
 
 export {initiateGame, removeImg, getNextLocation, generateSequence};

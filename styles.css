@@ -400,14 +400,15 @@ it contains first a vertical measure line, then the staff, then another vertical
   justify-content: space-evenly;
   padding: 1em;
   border-radius: 10px;
-  width: 30vw;
-  height: 30vh;
+  width: 35vw;
+  height: 44vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   outline: none;
   font-weight: 500;
   font-size: 1.1rem;
+  background-color: rgb(255, 255, 255);
 }
 
 .done-modal::backdrop {
@@ -419,16 +420,19 @@ it contains first a vertical measure line, then the staff, then another vertical
   font-weight: 500;
   font-size: 1.1rem;
   width: 35%;
-  height: 20%;
+  height: 15%;
   border-radius: 8px;
   border: none;
-  background-color: rgb(82, 191, 82);
+  background-color: rgb(150, 150, 150);
   color: white;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .done-modal button:focus {
   outline: none;
+}
+
+.score-circle {
 }
 
 @media (max-width: 500px) {
@@ -540,7 +544,7 @@ it contains first a vertical measure line, then the staff, then another vertical
     padding: 1em;
     border-radius: 10px;
     width: 80vw;
-    height: 25vh;
+    height: 42vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -551,6 +555,7 @@ it contains first a vertical measure line, then the staff, then another vertical
 
   .done-modal button {
     height: 30%;
+    padding: 0.5em;
   }
 
 }

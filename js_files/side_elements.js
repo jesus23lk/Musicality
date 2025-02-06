@@ -258,6 +258,7 @@ function setupAllSideElements() {
   setupNoteRange();
   
   updateHudNoteRange();
+  
 }
 
 export default setupAllSideElements;
