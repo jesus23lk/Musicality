@@ -24,8 +24,8 @@ function setupDropDowns() {
 
   }
 
-  const maxSelect = document.getElementById('max-select');       //Drop down selector for max note
-  const minSelect = document.getElementById('min-select');       //Drop down selector for min note
+  const maxSelect = document.querySelector('.max-select');       //Drop down selector for max note
+  const minSelect = document.querySelector('.min-select');       //Drop down selector for min note
   
   for(let i = 0; i < 52; i++) {
 
@@ -81,13 +81,13 @@ function setupDropDowns() {
   /* Below we configure our update button that the user clicks
     to confirm their choice of highest and lowest notes */
 
-  const updateBtn = document.getElementById('update-btn');      
+  const updateBtn = document.querySelector('.update-btn');      
   updateBtn.onclick = updateMinMax;                                 
 
   /* Below we configure our reset button. clicked to reset
     highest and lowest notes */
 
-  const resetBtn = document.getElementById('reset-btn');
+  const resetBtn = document.querySelector('.reset-btn');
   resetBtn.onclick = resetMinMax;                                 
 }
 
@@ -95,15 +95,15 @@ function updateMinMax() {
 
   /* Entered when user clicks update button to update lowest and highest note values */
 
-  const maxSelect = document.getElementById('max-select');      
-  const minSelect = document.getElementById('min-select');      
+  const maxSelect = document.querySelector('.max-select');      
+  const minSelect = document.querySelector('.min-select');      
 
   /* Retrieve the <option> elements with current lowest and highest notes */
   const maxOption = maxSelect.options[maxSelect.selectedIndex];          
   const minOption = minSelect.options[minSelect.selectedIndex];
 
   /* Check that lowest note is not greater than or equal to highest note */
-  const errorMsg = document.getElementById('error-msg');                    
+  const errorMsg = document.querySelector('.error-msg');                    
 
   if(minOption.idNum < maxOption.idNum)  {                                 
 
@@ -148,12 +148,15 @@ function resetMinMax() {
 
   /* entered when user clicks reset button to reset highest and lowest notes */
 
-  if(g.errorState) g.errorState = false;                                           //Exit error state
+  if(g.errorState) {
+    document.querySelector('.error-msg').textContent = '';
+    g.errorState = false;                                           //Exit error state
+  }
 
   else removeImg();                                               //If we aren't in an error state, then remove the note image
 
-  const maxSelect = document.getElementById('max-select');       
-  const minSelect = document.getElementById('min-select');    
+  const maxSelect = document.querySelector('.max-select');       
+  const minSelect = document.querySelector('.min-select');    
 
   // Return lowest and highest note selectors to their default values
   maxSelect.options[11].selected = 'selected';                 
@@ -172,7 +175,7 @@ function resetMinMax() {
 
 function setupVolume() {
 
-  const volumeSection = document.getElementById('volume-section');
+  const volumeSection = document.querySelector('.volume-section');
   const volumeIcon = document.querySelector('.volume-icon');
   
   volumeSection.addEventListener('click', () => {
@@ -189,11 +192,11 @@ function setupVolume() {
   });
 }
 
-function setupLeftSidebar() {
+function setupSidebar() {
 
-  const menuIcon = document.getElementById("menu-icon");
+  const menuIcon = document.querySelector(".menu-icon");
   const closeSection = document.querySelector(".close-section");
-  const sideBar = document.getElementById("sidebar");
+  const sideBar = document.querySelector(".sidebar");
   const cover = document.querySelector('.cover');
 
   cover.addEventListener('click',() => {
@@ -216,7 +219,7 @@ function setupNoteRange() {
   const noteRangeSec = document.querySelector('.note-range-container');
   const arrowIcon = document.querySelector('.material-symbols-outlined.arrow-icon');
 
-  document.getElementById('note-range-section').addEventListener('click', (e) => {
+  document.querySelector('.note-range-section').addEventListener('click', (e) => {
 
     if (e.target.closest('.note-range-container')) return;  
 
@@ -253,7 +256,7 @@ function setupAllSideElements() {
 
   setupVolume();                            //Sets up the volume button to disable an enable volume
 
-  setupLeftSidebar();
+  setupSidebar();
 
   setupNoteRange();
   

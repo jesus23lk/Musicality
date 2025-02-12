@@ -7,49 +7,49 @@
     <title>Musicality</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
     <link rel = 'stylesheet' href = 'styles.css'>
+    <link rel="icon" type="image/ico" href="Images/favicon.ico">
   </head>
   <body>
     <!-- Side bar content-->
-    <aside id="sidebar">
+    <aside class="sidebar">
       <div class="sidebar-section close-section">
         <span>Close</span>
-        <span class="material-symbols-outlined" id="close-icon">close</span>
+        <span class="material-symbols-outlined close-icon">close</span>
       </div>
-      <div class="sidebar-section" id="volume-section">
+      <div class="sidebar-section volume-section">
         <span>Volume</span>
         <span class="material-symbols-outlined volume-icon">toggle_on</span>
       </div>
-      <div class="sidebar-section" id="note-range-section">
+      <div class="sidebar-section note-range-section">
         <span>Note Range</span>
         <span class="material-symbols-outlined arrow-icon">keyboard_arrow_down</span>
         <div class="note-range-container" data-visible="false">
           <div class = 'select-container'>
             <label for = 'max-select'>Highest Note</label>
-            <select id = 'max-select'></select>
+            <select class='max-select'></select>
           </div>
           <div class = 'select-container'>
             <label for = 'min-select'>Lowest Note</label>
-            <select id = 'min-select'></select>
+            <select class='min-select'></select>
           </div>
-          <button id = 'update-btn'>Update</button>
-          <button id = 'reset-btn'>Reset</button>
-          <p id = 'error-msg'></p>      
+          <button class='update-btn'>Update</button>
+          <button class='reset-btn'>Reset</button>
+          <p class='error-msg'></p>      
         </div>
       </div>
     </aside>
 
     <div class="cover"></div>
     <!-- main content-->
-    <div id = 'page'>
-
+    <div class='page'>
       <header class="page-header">
-        <span class="material-symbols-outlined" id="menu-icon">menu</span>
+        <span class="material-symbols-outlined menu-icon">menu</span>
       </header>
-      <div id = 'center-area'>
+      <div class='center-area'>
         <!-- BELOW IS TEST CODE, BE SURE TO REMOVE IT-->
-        <div id = 'canvas'>
+        <div class='canvas'>
           <div class = 'vertical-line'></div>
-          <div id = 'staff'></div>
+          <div class='staff'></div>
           <div class = 'vertical-line'></div>
         </div>
         <div class="hud-section">
@@ -60,10 +60,10 @@
             <span class="material-symbols-outlined cancel-icon">cancel</span>
           </div>
         </div>
-        <div id = 'btn-container'></div>
+        <div class='btn-container'></div>
         <!-- <div id = 'msg-banner'>Press a key or click</div> -->
-        <img src = 'Images/treble-clef.png' id = 't-pic'>
-        <img src = 'Images/bass-clef.png' id = 'b-pic'>      
+        <img src='Images/treble-clef.png' class='t-pic'>
+        <img src='Images/bass-clef.png' class='b-pic'>      
       </div>
     </div>
     <dialog class="done-modal">
@@ -76,6 +76,6 @@
       </canvas>
       <button class="restart-game-btn">Restart</button>
     </dialog>
-    <script src = './js_files/main.js' type="module"></script>
+    <script src = './js_files/single_notes.js' type="module"></script>
   </body>
 </html>

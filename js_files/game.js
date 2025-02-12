@@ -4,9 +4,51 @@ import g from "./globals.js";
 
 // Only for textcontent of buttons
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+const intervals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th'];
 
 // random value in the range min-max (inclusive)
 const getRandom = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
+
+function createLocations() {
+
+  //This functions creates all lines and spaces where a note can spawn
+
+  const grdStaff = document.querySelector('.staff');                  //grand staff contains all lines and spaces
+  
+  for(let i = 0; i < 52; i++) {
+
+    const curChild = document.createElement('div');
+
+    //Lines on even indices
+    if(i % 2 === 0) {                         
+
+      if(i < 17 || i > 39 || i === 28) {      //Ledger lines above treble clef, below bass clef, and middle C
+
+        curChild.className = 'ledger-line';
+      }
+
+      else curChild.className = 'line';
+    }
+
+    //Spaces on odd indices
+    else {
+
+      /*ledger spaces start at 2nd space above treble clef and higher.
+        Also 2nd space below bass clef and lower*/
+      
+      if (i < 16 || i > 40) curChild.className = 'ledger-space';         
+
+      else curChild.className = 'space';                                
+    }   
+
+    curChild.classList.add('loc-' + i);                       
+    curChild.idNum = i;                             //A seperate property idNum is created here
+    curChild.noteVal = g.notes[i % 7];                //Assign a note value (A-G) to each location
+
+    grdStaff.appendChild(curChild);                    
+  }
+
+}
 
 const resetErrorCount = () => {
 
@@ -15,17 +57,20 @@ const resetErrorCount = () => {
   document.querySelector('.mistakes-count span').textContent = 0;
 }
 
-function setupBtns() {
+function setupBtns(gameType) {
   
-  const btnDiv = document.getElementById('btn-container');        //div that holds 7 A-G buttons
+  const btnDiv = document.querySelector('.btn-container');        //div that holds 7 A-G buttons
 
   for(let i = 0; i < notesAG.length; i++) {              
 
     const newBtn = document.createElement('button');
 
     newBtn.className = 'btn';
-    newBtn.textContent = notesAG[i];
-    newBtn.noteVal = notesAG[i];                              //Each button gets a property named 'noteVal' that gets a value 'A'-'G'
+
+    //Check if we are in interval mode
+    newBtn.textContent = gameType === 'intervals' ? intervals[i] : notesAG[i];
+    newBtn.noteVal = gameType === 'intervals' ? null : notesAG[i];                             
+
     newBtn.addEventListener('click', parseInput);
 
     btnDiv.appendChild(newBtn);                                
@@ -34,21 +79,17 @@ function setupBtns() {
 
 function showExtraLines(locDiv) {
 
-  // For when note is above treble clef or below bass clef which require extra lines
+  // If on a ledger line, make it visible
+  if(locDiv.classList.contains('ledger-line')) locDiv.style.backgroundColor = 'black';      
 
-  if(locDiv.className === 'ledger-line') locDiv.style.backgroundColor = 'black';      //If on a ledger-line, make it visible
-
-  const staff = document.getElementById('staff').children;
-
-  /*This part below does some linked list style logic where we use a temp variable to traverse a list
-    In this case we are traversing our line and space divs */
-
-  let tempLoc = locDiv;            //start at our note location
-  let i = 0;                    //i is just used to save every location we made visible to an array 
+  // Traverse through lines and spaces
+  let tempLoc = locDiv;            
+  let i = 0;                    
   
-  while (tempLoc.idNum < 17) {                    //Entered if we are above treble clef
+  //For above treble clef
+  while (tempLoc.idNum < 17) {                    
 
-    if (tempLoc.className === 'ledger-line') {
+    if (tempLoc.classList.contains('ledger-line')) {
       
       /* In here we make every ledger line underneath our
         note location visible, stopping
@@ -68,7 +109,7 @@ function showExtraLines(locDiv) {
       note location visible, stopping
       at the first ledger line below bass clef*/
 
-    if (tempLoc.className === 'ledger-line') {
+    if (tempLoc.classList.contains('ledger-line')) {
       tempLoc.style.backgroundColor = 'black';          //We also wanna save each line we made visible, that way we can hide them later
       g.extraLines[i] = tempLoc;
       i++;
@@ -210,16 +251,16 @@ function getNextLocation() {
   let locId = g.currentSequence.pop();
 
   //Retrieve div that corresponds to our locId
-  const locDiv = document.getElementById('loc-' + locId);
+  const locDiv = document.querySelector('.loc-' + locId);
   
-  if (locDiv.className === 'ledger-line' || locDiv.className === 'ledger-space') showExtraLines(locDiv);      
+  if (locDiv.classList.contains('ledger-line') || locDiv.classList.contains('ledger-space')) showExtraLines(locDiv);      
   
   //Everything below here pertains to our quarter note image
   
   const note = document.createElement('img');                                   
   g.noteImg = note;                                          
   note.src = 'Images/quarter_note.png';
-  note.id = 'note';
+  note.classList.add('note');
   locDiv.appendChild(note);
   
   if (locId < 5) note.classList.add('upside-down')
@@ -230,9 +271,8 @@ function getNextLocation() {
 function removeImg() {
 
   g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
-  g.noteImg.classList.remove('upside-down');
 
-  if(g.noteDiv.className === 'ledger-line') g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
+  if (g.noteDiv.classList.contains('ledger-line')) g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
 
   if(g.extraLines) {
 
@@ -324,9 +364,11 @@ function parseInput(e) {
   evaluateChoice(choice);
 }
 
-function initiateGame() {
+function initiateGame(gameType) {
+
+  createLocations();
   
-  setupBtns();
+  setupBtns(gameType);
 
   generateSequence();
 
@@ -337,5 +379,6 @@ function initiateGame() {
 
   setupRestartBtn();
 }
+
 
 export {initiateGame, removeImg, getNextLocation, generateSequence};
