@@ -447,7 +447,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   
   
   /* Div that holds our 8 buttons */
-  .btn-correct {                    
+  .btn-container {                    
     height: auto;
     justify-content: space-around;
     flex-wrap: wrap;
