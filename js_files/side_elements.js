@@ -240,7 +240,7 @@ function setupNoteRange() {
 function updateHudNoteRange() {
   //Used to update note range in the hud
 
-  const hudNtRng = document.querySelector('.hud-note-range');
+  const hudNtRng = document.querySelector('.hud-left');
 
   //Get indices for highest and lowest notes
   const high = g.highestNote;
@@ -264,4 +264,4 @@ function setupAllSideElements() {
   
 }
 
-export default setupAllSideElements;
+export {setupSidebar, setupAllSideElements};

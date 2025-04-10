@@ -1,0 +1,48 @@
+.key-sig-pic {
+  width: 450px;
+}
+
+/* This file needs to rewrite the properties of global canvas */
+.canvas {
+  height: auto;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-container {
+  height: auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 1em;
+}
+
+.btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.hud-left {
+  font-size: 0.85rem;
+  width: 17%;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+
+  .key-sig-pic {
+    width: 250px;
+  }
+
+  .hud-left {
+    font-size: 0.7rem;
+    text-align: center;
+  }
+}

@@ -54,7 +54,7 @@ const resetErrorCount = () => {
 
   g.numErrors = 0;
   g.firstError = true;
-  document.querySelector('.mistakes-count span').textContent = 0;
+  document.querySelector('.hud-right span').textContent = 0;
 }
 
 function setupBtns(gameType) {
@@ -159,7 +159,7 @@ function getColor(percent) {
   return `hsl(${hue}, 100%, ${lightness})`;
 }
 
-function drawScoreCircle(points) {
+function drawScoreCircle(points, length) {
 
   const canvas = document.querySelector('.score-circle');
   const ctx = canvas.getContext('2d');
@@ -176,7 +176,7 @@ function drawScoreCircle(points) {
   ctx.fill();
   
   // Percentage of the circle to be filled here 0-1
-  let percent = points / g.sequenceLength;
+  let percent = points / length;
   let percent100 = Math.floor(percent * 100);
   const startAngle = -Math.PI/2;
   const endAngle = startAngle + Math.PI * 2 * percent;
@@ -218,7 +218,7 @@ function endGame() {
   // Disable user input
   g.errorState = true;
 
-  drawScoreCircle(points);
+  drawScoreCircle(points, length);
 }
 
 function setupRestartBtn() {
@@ -245,7 +245,7 @@ function getNextLocation() {
     return;
   }
 
-  const noteNumDiv = document.querySelector('.note-number-container');
+  const noteNumDiv = document.querySelector('.hud-center');
   noteNumDiv.textContent = `${g.sequenceNum}/${g.sequenceLength}`;
 
   let locId = g.currentSequence.pop();
@@ -289,7 +289,7 @@ function removeImg() {
 
 function incErrorCount() {
   g.numErrors++;
-  document.querySelector('.mistakes-count span').textContent = g.numErrors;
+  document.querySelector('.hud-right span').textContent = g.numErrors;
   g.firstError = false;
 }
 
@@ -299,6 +299,7 @@ function evaluateChoice(choice) {
   const btns = document.querySelectorAll('.btn');
   let btn;
   
+  // Find button they clicked
   for (btn of btns) {
     if (btn.noteVal === choice) break;
   }
@@ -380,5 +381,4 @@ function initiateGame(gameType) {
   setupRestartBtn();
 }
 
-
-export {initiateGame, removeImg, getNextLocation, generateSequence};
+export {getRandom, initiateGame, removeImg, getNextLocation, generateSequence, drawScoreCircle};

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Signatures</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
+    <link rel = 'stylesheet' href='./CSS/global.css'>
+    <link rel="icon" type="image/ico" href="Images/favicon.ico">
+    <link rel="stylesheet" href="./CSS/key_signatures.css">
+  </head>
+  <body>
+    <!-- Side bar content-->
+    <aside class="sidebar">
+      <div class="sidebar-section close-section">
+        <span>Close</span>
+        <span class="material-symbols-outlined close-icon">close</span>
+      </div>
+      <div class="sidebar-section volume-section">
+        <span>Volume</span>
+        <span class="material-symbols-outlined volume-icon">toggle_on</span>
+      </div>
+      <div class="sidebar-section note-range-section">
+        <span>Note Range</span>
+        <span class="material-symbols-outlined arrow-icon">keyboard_arrow_down</span>
+        <div class="note-range-container" data-visible="false">
+          <div class = 'select-container'>
+            <label for = 'max-select'>Highest Note</label>
+            <select class='max-select'></select>
+          </div>
+          <div class = 'select-container'>
+            <label for = 'min-select'>Lowest Note</label>
+            <select class='min-select'></select>
+          </div>
+          <button class='update-btn'>Update</button>
+          <button class='reset-btn'>Reset</button>
+          <p class='error-msg'></p>      
+        </div>
+      </div>
+    </aside>
+
+    <div class="cover"></div>
+    <!-- main content-->
+    <div class='page'>
+      <header class="page-header">
+        <span class="material-symbols-outlined menu-icon">menu</span>
+        <a href="./index.html" class="logo-link">
+          <img src="./Images/music logo.svg" class='page-logo' alt="logo for header">
+          <span class="logo-text">Musicality</span>
+        </a>
+        <div class="header-links">
+          <a href="./index.html">Single Notes</a>
+          <a href="./key_signatures.html">Key Signatures</a>
+        </div>
+      </header>
+
+      <div class='center-area'>
+        <div class='canvas'>
+          <img src="./Images/key_signatures/c_major.svg" alt="key signature" class="key-sig-pic">
+        </div>
+        <div class="hud-section">
+          <!-- To show if we are in major or minor key  -->
+          <div class="hud-left">Major Keys</div>
+          <!-- for key sig number  -->
+          <div class="hud-center"></div>
+           <!-- Shows mistake count  -->
+          <div class="hud-right">
+            <span>0</span>
+            <span class="material-symbols-outlined cancel-icon">cancel</span>
+          </div>
+        </div>
+        <div class='btn-container'>
+          <button >C♭</button>
+          <button >G♭</button>
+          <button >D♭</button>
+          <button >A♭</button>
+          <button >E♭</button>
+          <button >B♭</button>
+          <button >F</button>
+          <button >C</button>
+          <button >G</button>
+          <button >D</button>
+          <button >A</button>
+          <button >E</button>
+          <button >B</button>
+          <button >F♯</button>
+          <button >C♯</button>
+        </div>
+      </div>
+    </div>
+    <dialog class="done-modal">
+      <h2>
+          Your Score
+      </h2>
+      <span></span>
+      <canvas class="score-circle" width="150" height="150">
+        <span></span>
+      </canvas>
+      <button class="restart-game-btn">Restart</button>
+    </dialog>
+    <script type="module" src="js_files/key_signatures.js"></script>
+  </body>
+</html>
