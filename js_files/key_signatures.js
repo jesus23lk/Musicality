@@ -1,4 +1,5 @@
 import { getRandom, drawScoreCircle } from "./game.js";
+import { setupSidebar } from "./side_elements.js";
 
 const keySigs = [
   'a_flat_major',
@@ -148,6 +149,7 @@ function main() {
   dipslayImg();
   setupBtns();
   setupRestartBtn();
+  setupSidebar();
 }
 
 main();

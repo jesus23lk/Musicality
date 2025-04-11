@@ -8,6 +8,14 @@
   font-family: 'rubik', sans-serif;
 }
 
+/* Global styling for all icons */
+.material-symbols-outlined {
+  font-variation-settings: 'wght' 300;
+  font-size: 2.2rem !important;
+  color: white;
+  cursor: pointer;
+}
+
 .logo-link {
   display: flex;
   align-items: center;
@@ -37,11 +45,16 @@ a {
   display: none;
 }
 
+.error-msg {                                     
+ color: red;
+ font-size: 0.8rem;
+}
+
 .sidebar {
   height: 100%;
   position: fixed;
   background-color: rgb(67, 67, 67);
-  width: 18vw;
+  width: 80vw;
   left: -100vw;
   transition-duration: 250ms;
   z-index: 3;
@@ -55,84 +68,12 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5em;
-  height: 50px;
-  font-size: 0.95rem;
+  padding: 0 1em;
+  height: 60px;
+  font-size: 1.15rem;
   color: white;
   cursor: pointer;
   position: relative;
-}
-
-.note-range-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  font-size: 0.8rem;
-  padding: 0.5rem 0.8rem;
-  position: absolute;
-  opacity: 0%;
-  top: 45px;
-  left: 0px;
-  transition-duration: 300ms;
-  pointer-events: none;
-  width: 100%
-}
-
-.note-range-container.visible {
-  top: 50px;
-  opacity: 100%;
-  pointer-events: auto;
-}
-
-.note-range-container * {
-  margin-bottom: 0.3rem;
-}
-
-.note-range-container button {
-  width: 50%;
-  padding: 0.6rem;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-}
-
-.select-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.sidebar-section:hover {
-  background-color: rgb(106, 106, 106);
-}
-.note-range-container select {
-  border-radius: 8px;
-  width: 65%;
-  height: 30px; 
-}
-
-.update-btn {
-  background-color: rgb(71, 169, 41);
-}
-
-.update-btn:hover {
-  background-color: rgb(50, 122, 28);
-}
-
-/* (button) Used to reset highest and lowest notes */
-.reset-btn {                               
-  background-color: rgb(223, 54, 54);
-}
-
-.reset-btn:hover {
-  background-color: rgb(187, 24, 24);
-}
-
-.error-msg {                                     
- color: red;
 }
 
 
@@ -156,9 +97,78 @@ a {
   height: 65px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5em;
   background-color: rgb(67, 67, 67);
-  box-shadow: 2px 2px 8px rgb(147, 147, 147);                      
+  box-shadow: 2px 2px 8px rgb(147, 147, 147);                     
+  position: relative;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+}
+
+.settings-context {
+  width: 25vw;
+  min-width: 350px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 2px 2px 8px rgb(93, 93, 93);                      
+  position: absolute;
+  right: 8px;
+  top: 110%;
+  border-radius: 20px;
+  z-index: 4; 
+  display: flex;
+  flex-direction: column;
+  padding: 2.2em 2em;
+}
+
+.settings-context.hidden {
+  display: none;
+}
+
+.close-context {
+  color: black !important;
+  position: absolute;
+  font-size: 1.7rem !important;
+  right: 3%;
+  top: 3%;
+}
+
+.reset-note-range-btn {
+  padding: 1em;
+  width: 75%;
+  background-color: rgb(103, 190, 234);
+  border: none;
+  color: white;
+  font-weight: 500;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+.min-select, .max-select {
+  border-radius: 8px;
+  padding: 0.2em;
+}
+
+.context-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9em 0;
+}
+
+.volume-icon {
+  color: rgb(106, 106, 106) !important;
+  font-size: 2.3rem !important;
 }
 
 .header-links {
@@ -184,14 +194,6 @@ a {
   font-family: charm;
   font-size: 1.8rem;
   font-weight: 500;
-}
-
-/* Global styling for all icons */
-.material-symbols-outlined {
-  font-variation-settings: 'wght' 300;
-  font-size: 2.2rem !important;
-  color: white;
-  cursor: pointer;
 }
 
 .page {
@@ -438,8 +440,13 @@ it contains first a vertical measure line, then the staff, then another vertical
 @media (max-width: 500px) {
 
   .menu-icon {
-    font-size: 1.rem !important;
+    display: inline;
   }
+
+  .header-links {
+    display: none;
+  }
+
 
   .page-header {
     height: 60px;
@@ -531,10 +538,6 @@ it contains first a vertical measure line, then the staff, then another vertical
   .b-pic {
     height: 38px;
     top: 221px;                            
-  }
-
-  .sidebar {
-    width: 60vw;
   }
 
   .done-modal[open] {

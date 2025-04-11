@@ -18,6 +18,7 @@
 
 .start-btn {
   width: 25%;
+  min-width: 100px;
   height: 38px;
   font-size: 0.9rem;
   background-color: rgb(54, 127, 236);
@@ -41,23 +42,12 @@
   height: 75%;
 }
 
-.menu-icon {
-  display: none;
-}
-
 @media (max-width: 500px) {
-
-  .menu-icon {
-    display: inline;
-  }
-
-  .header-links {
-    display: none;
-  }
-
+  
   .home-main-content {
     flex-direction: column;
     margin-top: 1em;
+    gap: 1.5em;
   }
 
   .home-page-art {

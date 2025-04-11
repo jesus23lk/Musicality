@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Single Note Reading</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
     <link rel = 'stylesheet' href='./CSS/global.css'>
     <link rel="icon" type="image/ico" href="Images/favicon.ico">
   </head>
@@ -16,26 +16,16 @@
         <span>Close</span>
         <span class="material-symbols-outlined close-icon">close</span>
       </div>
-      <div class="sidebar-section volume-section">
-        <span>Volume</span>
-        <span class="material-symbols-outlined volume-icon">toggle_on</span>
-      </div>
-      <div class="sidebar-section note-range-section">
-        <span>Note Range</span>
-        <span class="material-symbols-outlined arrow-icon">keyboard_arrow_down</span>
-        <div class="note-range-container" data-visible="false">
-          <div class = 'select-container'>
-            <label for = 'max-select'>Highest Note</label>
-            <select class='max-select'></select>
-          </div>
-          <div class = 'select-container'>
-            <label for = 'min-select'>Lowest Note</label>
-            <select class='min-select'></select>
-          </div>
-          <button class='update-btn'>Update</button>
-          <button class='reset-btn'>Reset</button>
-          <p class='error-msg'></p>      
+      <a href="./index.html">
+        <div class="sidebar-section">
+          <span>Home</span>
         </div>
+      </a>
+      <a href="./key_signatures.html">
+        <div class="sidebar-section">
+          <span>Key Signatures</span>
+        </div>
+      </a>
       </div>
     </aside>
 
@@ -43,14 +33,49 @@
     <!-- main content-->
     <div class='page'>
       <header class="page-header">
-        <span class="material-symbols-outlined menu-icon">menu</span>
-        <a href="./index.html" class="logo-link">
-          <img src="./Images/music logo.svg" class='page-logo' alt="logo for header">
-          <span class="logo-text">Musicality</span>
-        </a>
-        <div class="header-links">
-          <a href="./index.html">Single Notes</a>
-          <a href="./key_signatures.html">Key Signatures</a>
+
+        <!-- Left side of header  -->
+        <div class="header-left">
+          <span class="material-symbols-outlined menu-icon">menu</span>
+          <a href="./index.html" class="logo-link">
+            <img src="./Images/music logo.svg" class='page-logo' alt="logo for header">
+            <span class="logo-text">Musicality</span>
+          </a>
+          <div class="header-links">
+            <a href="./single_notes.html">Single Notes</a>
+            <a href="./key_signatures.html">Key Signatures</a>
+          </div>
+        </div>
+
+        <!-- Right side of header -->
+        <div class="header-right">
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+
+        <!-- Context menu for settings -->
+        <div class="settings-context hidden">
+          <span class="material-symbols-outlined close-context">close</span>
+          <div class="context-section" style="cursor: pointer;">
+            <span>Volume</span>
+            <span class="material-symbols-outlined volume-icon">toggle_on</span>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span>Highest Note</span>
+            <select class="max-select"></select>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span>Lowest Note</span>
+            <select class="min-select"></select>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span class="error-msg"></span>
+          </div>
+          <div class="context-section" style="justify-content: center;">
+            <button class="reset-note-range-btn">Reset Note Range</button>
+          </div>
         </div>
       </header>
       <div class='center-area'>

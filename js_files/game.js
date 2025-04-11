@@ -218,7 +218,7 @@ function endGame() {
   // Disable user input
   g.errorState = true;
 
-  drawScoreCircle(points, length);
+  drawScoreCircle(points, g.sequenceLength);
 }
 
 function setupRestartBtn() {
@@ -270,7 +270,8 @@ function getNextLocation() {
 
 function removeImg() {
 
-  g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
+  g.noteImg.remove();
+  // g.noteDiv.removeChild(g.noteImg);                     //Remove the note image
 
   if (g.noteDiv.classList.contains('ledger-line')) g.noteDiv.style.backgroundColor = 'transparent';      //If the current location is a ledger-line, then we need to hide it
 

@@ -1,6 +1,31 @@
 import g from './globals.js';
 import { removeImg, getNextLocation, generateSequence } from './game.js';
 
+function setupContextSettings() {
+
+  const context = document.querySelector('.settings-context');
+  const settingsIcon = document.querySelector('.header-right span');
+  const closeIcon = document.querySelector('.close-context');
+
+  settingsIcon.addEventListener('click', () => {
+    context.classList.toggle('hidden');
+  });
+
+  document.body.addEventListener('click', (e) => {
+
+    // Don't close context if we click within context or on settings icon
+    if (context.contains(e.target) || e.target === settingsIcon) return;
+
+    if (!context.classList.contains('hidden')) {
+      context.classList.add('hidden');
+    }
+  })
+
+  closeIcon.addEventListener('click', () => context.classList.add('hidden'));
+
+  
+};
+
 function setupDropDowns() {
 
   let charRange = 'CBAGFED'         //Defines the range of characters we want
@@ -78,17 +103,14 @@ function setupDropDowns() {
                                                                           Which is G1*/
   }
 
-  /* Below we configure our update button that the user clicks
-    to confirm their choice of highest and lowest notes */
-
-  const updateBtn = document.querySelector('.update-btn');      
-  updateBtn.onclick = updateMinMax;                                 
+  maxSelect.addEventListener('change', updateMinMax);
+  minSelect.addEventListener('change', updateMinMax);
 
   /* Below we configure our reset button. clicked to reset
     highest and lowest notes */
 
-  const resetBtn = document.querySelector('.reset-btn');
-  resetBtn.onclick = resetMinMax;                                 
+  const resetBtn = document.querySelector('.reset-note-range-btn');
+  resetBtn.addEventListener('click', resetMinMax);                                 
 }
 
 function updateMinMax() {
@@ -175,8 +197,8 @@ function resetMinMax() {
 
 function setupVolume() {
 
-  const volumeSection = document.querySelector('.volume-section');
   const volumeIcon = document.querySelector('.volume-icon');
+  const volumeSection = volumeIcon.closest('.context-section');
   
   volumeSection.addEventListener('click', () => {
     
@@ -204,37 +226,15 @@ function setupSidebar() {
     cover.style.display = 'none';
   });
 
-  menuIcon.onclick = () => {
+  menuIcon.addEventListener('click', () => {
     sideBar.classList.add("visible");
     cover.style.display = 'block';
-  }
-  closeSection.onclick = () => {
+  });
+
+  closeSection.addEventListener('click', () => {
     sideBar.classList.remove("visible");
     cover.style.display = 'none';
-  }
-}
-
-function setupNoteRange() {
-
-  const noteRangeSec = document.querySelector('.note-range-container');
-  const arrowIcon = document.querySelector('.material-symbols-outlined.arrow-icon');
-
-  document.querySelector('.note-range-section').addEventListener('click', (e) => {
-
-    if (e.target.closest('.note-range-container')) return;  
-
-    if(noteRangeSec.dataset.visible === 'false') {
-      noteRangeSec.classList.add('visible');
-      arrowIcon.textContent = 'keyboard_arrow_up';
-      noteRangeSec.dataset.visible = 'true';
-    }
-    
-    else {
-      noteRangeSec.classList.remove('visible');
-      arrowIcon.textContent = 'keyboard_arrow_down';
-      noteRangeSec.dataset.visible = 'false';
-    }
-  })
+  });
 }
 
 function updateHudNoteRange() {
@@ -252,14 +252,14 @@ function updateHudNoteRange() {
 
 function setupAllSideElements() {
 
+  setupContextSettings();
+
   setupDropDowns();                           //Sets up drop down menus to change highest and lowest notes
 
   setupVolume();                            //Sets up the volume button to disable an enable volume
 
   setupSidebar();
 
-  setupNoteRange();
-  
   updateHudNoteRange();
   
 }
