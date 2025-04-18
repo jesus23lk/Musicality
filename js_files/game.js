@@ -1,4 +1,5 @@
 import g from "./globals.js";
+import { playCorrectSound, playWrongSound } from "./util.js";
 
 //! THIS FILE CONTAINS FUNCTIONALITY FOR THE ACTUAL GAME
 
@@ -312,12 +313,12 @@ function evaluateChoice(choice) {
 
     g.firstError = true;
 
-    if(g.volumeOn) g.sounds.correct.play();
+    if(g.volumeOn) playCorrectSound();
     
     //correct animation
     btn.classList.add('btn-correct');
     btn.addEventListener('animationend', () => btn.classList.remove('btn-correct'));
-
+    
     //Move note to new location
     removeImg();                            
     g.sequenceNum++;
@@ -326,10 +327,11 @@ function evaluateChoice(choice) {
   
   //Case 2 wrong answer
   else {
-
+    
     if (g.firstError) incErrorCount();
+    
+    if(g.volumeOn) playWrongSound();
 
-    if(g.volumeOn) g.sounds.wrong.play();                              
     btn.classList.add('btn-wrong');
     btn.addEventListener('animationend', () => btn.classList.remove('btn-wrong'));
   }

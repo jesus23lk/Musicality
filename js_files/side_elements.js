@@ -6,9 +6,13 @@ function setupContextSettings() {
   const context = document.querySelector('.settings-context');
   const settingsIcon = document.querySelector('.header-right span');
   const closeIcon = document.querySelector('.close-context');
+  const cover = document.querySelector('.cover');
 
   settingsIcon.addEventListener('click', () => {
+
     context.classList.toggle('hidden');
+
+    if (!context.classList.contains('hidden')) cover.style.display = 'block';
   });
 
   document.body.addEventListener('click', (e) => {
@@ -21,7 +25,10 @@ function setupContextSettings() {
     }
   })
 
-  closeIcon.addEventListener('click', () => context.classList.add('hidden'));
+  closeIcon.addEventListener('click', () => {
+    context.classList.add('hidden')
+    cover.style.display = 'none';
+  });
 
   
 };
@@ -264,4 +271,4 @@ function setupAllSideElements() {
   
 }
 
-export {setupSidebar, setupAllSideElements};
+export {setupSidebar, setupAllSideElements, setupContextSettings};

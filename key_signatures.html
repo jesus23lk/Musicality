@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Key Signatures</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,toggle_off,toggle_on&display=block" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=arrow_back,arrow_forward,cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,toggle_off,toggle_on&display=block" rel="stylesheet" />
     <link rel = 'stylesheet' href='./CSS/global.css'>
     <link rel="icon" type="image/ico" href="Images/favicon.ico">
     <link rel="stylesheet" href="./CSS/key_signatures.css">
@@ -33,7 +33,9 @@
     <div class="cover"></div>
     <!-- main content-->
     <div class='page'>
+
       <header class="page-header">
+        <!-- Left side of header  -->
         <div class="header-left">
           <span class="material-symbols-outlined menu-icon">menu</span>
           <a href="./index.html" class="logo-link">
@@ -45,7 +47,36 @@
             <a href="./key_signatures.html">Key Signatures</a>
           </div>
         </div>
-        <span class="material-symbols-outlined">more_vert</span>
+
+        <!-- Right side of header -->
+        <div class="header-right">
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+
+        <!-- Context menu for settings -->
+        <div class="settings-context hidden">
+          <span class="material-symbols-outlined close-context">close</span>
+          <div class="context-section volume-section" style="cursor: pointer;">
+            <span>Volume</span>
+            <span class="material-symbols-outlined volume-icon">toggle_on</span>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span>Key Type</span>
+          </div>
+          <div class="context-section" style="padding-top: 0;">
+            <div class="key-type-form">
+              <div class="major-div selected">
+                <input type="radio" name="keyType" id="major" value="major" checked>
+                <label for="major">Major</label>
+              </div>
+              <div class="minor-div">
+                <input type="radio" name="keyType" id="minor" value="minor">
+                <label for="minor">Minor</label>
+              </div>
+            </div>
+          </div>
+        </div>
       </header>
 
       <div class='center-area'>
@@ -64,21 +95,21 @@
           </div>
         </div>
         <div class='btn-container'>
-          <button >C♭</button>
-          <button >G♭</button>
-          <button >D♭</button>
-          <button >A♭</button>
-          <button >E♭</button>
-          <button >B♭</button>
-          <button >F</button>
-          <button >C</button>
-          <button >G</button>
-          <button >D</button>
-          <button >A</button>
-          <button >E</button>
-          <button >B</button>
-          <button >F♯</button>
-          <button >C♯</button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
         </div>
       </div>
     </div>

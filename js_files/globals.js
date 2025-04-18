@@ -30,12 +30,6 @@ const g = {
     "B0", "A0"
   ],
 
-  sounds: {
-    correct: new Audio("./audio/correct-answer.wav"),
-    wrong: new Audio("./audio/wrong-answer.wav"),
-    click: new Audio("./audio/click-1.mp3")
-  },
-
   errorState: false,     /* Set true when page is in an error state
   When this happens, interaction is disabled */
 
