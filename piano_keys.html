@@ -4,11 +4,11 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Signatures</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=arrow_back,arrow_forward,cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,toggle_off,toggle_on&display=block" rel="stylesheet" />
+    <title>Single Note Reading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
     <link rel = 'stylesheet' href='./CSS/global.css'>
+    <link rel = 'stylesheet' href='./CSS/piano_keys.css'>
     <link rel="icon" type="image/ico" href="Images/favicon.ico">
-    <link rel="stylesheet" href="./CSS/key_signatures.css">
   </head>
   <body>
     <!-- Side bar content-->
@@ -27,9 +27,9 @@
           <span>Single Notes</span>
         </div>
       </a>
-      <a href="./piano_keys.html">
+      <a href="./key_signatures.html">
         <div class="sidebar-section">
-          <span>Piano Keys</span>
+          <span>Key Signatures</span>
         </div>
       </a>
       </div>
@@ -39,7 +39,9 @@
     <!-- main content-->
     <div class='page'>
 
+      <!-- Page Header -->
       <header class="page-header">
+
         <!-- Left side of header  -->
         <div class="header-left">
           <span class="material-symbols-outlined menu-icon">menu</span>
@@ -61,7 +63,7 @@
 
         <!-- Context menu for settings -->
         <div class="settings-context hidden">
-
+          
           <!-- Close icon top left  -->
           <span class="material-symbols-outlined close-context">close</span>
 
@@ -72,56 +74,62 @@
           </div>
           <hr>
           <div class="context-section">
-            <span>Key Type</span>
+            <span>Mode</span>
           </div>
           <div class="context-section radio-form">
-            <div class="major-div selected">
-              <input type="radio" name="keyType" id="major" value="major" checked>
-              <label for="major">Major</label>
-            </div>
-            <div class="minor-div">
-              <input type="radio" name="keyType" id="minor" value="minor">
-              <label for="minor">Minor</label>
-            </div>
+              <div class="easy-div selected">
+                <input type="radio" name="mode" id="easy-key-game" value="easy" checked>
+                <label for="easy-key-game">Easy</label>
+              </div>
+              <div class="medium-div">
+                <input type="radio" name="mode" id="medium-key-game" value="medium">
+                <label for="medium-key-game">Medium</label>
+              </div>
+              <div class="hard-div">
+                <input type="radio" name="mode" id="hard-key-game" value="hard">
+                <label for="hard-key-game">Hard</label>
+              </div>
           </div>
         </div>
       </header>
 
-      <!-- Page Main Content  -->
+      <!-- Page Center  -->
       <div class='center-area'>
         <div class='canvas'>
-          <img src="./Images/key_signatures/c_major.svg" alt="key signature" class="key-sig-pic">
+          <h3>Play the following key:</h3>
+          <div class="cur-note"></div>
         </div>
 
-        <!-- Hud section -->
+        <!-- Hud Area  -->
         <div class="hud-section">
-          <!-- To show if we are in major or minor key  -->
-          <div class="hud-left">Major Keys</div>
-          <!-- for key sig number  -->
+          <!-- Was hud-note-range  -->
+          <div class="hud-left">Easy</div>
+
+          <!-- Was note-number-container  -->
           <div class="hud-center"></div>
-           <!-- Shows mistake count  -->
+
+           <!-- Was mistakes-count  -->
           <div class="hud-right">
             <span>0</span>
             <span class="material-symbols-outlined cancel-icon">cancel</span>
           </div>
         </div>
         <div class='input-container'>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-        </div>
+          <div class="keys">
+            <div data-note="C" class="key white"></div>
+            <div data-note="C♯/D♭" class="key black"></div>
+            <div data-note="D" class="key white"></div>
+            <div data-note="D♯/E♭" class="key black"></div>
+            <div data-note="E" class="key white"></div>
+            <div data-note="F" class="key white"></div>
+            <div data-note="F♯/G♭" class="key black"></div>
+            <div data-note="G" class="key white"></div>
+            <div data-note="G♯/A♭" class="key black"></div>
+            <div data-note="A" class="key white"></div>
+            <div data-note="A♯/B♭" class="key black"></div>
+            <div data-note="B" class="key white"></div>
+          </div>
+        <!-- <div id = 'msg-banner'>Press a key or click</div> -->
       </div>
     </div>
     <dialog class="done-modal">
@@ -134,6 +142,6 @@
       </canvas>
       <button class="restart-game-btn">Restart</button>
     </dialog>
-    <script type="module" src="js_files/key_signatures.js"></script>
+    <script src="./js_files/piano_keys.js" type="module"></script>
   </body>
 </html>

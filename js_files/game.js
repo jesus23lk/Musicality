@@ -1,14 +1,11 @@
 import g from "./globals.js";
-import { playCorrectSound, playWrongSound } from "./util.js";
+import * as util from "./util.js";
 
-//! THIS FILE CONTAINS FUNCTIONALITY FOR THE ACTUAL GAME
+//! THIS FILE CONTAINS FUNCTIONALITY FOR SINGLE NOTES
 
 // Only for textcontent of buttons
 const notesAG = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 const intervals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th'];
-
-// random value in the range min-max (inclusive)
-const getRandom = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
 function createLocations() {
 
@@ -60,7 +57,7 @@ const resetErrorCount = () => {
 
 function setupBtns(gameType) {
   
-  const btnDiv = document.querySelector('.btn-container');        //div that holds 7 A-G buttons
+  const btnDiv = document.querySelector('.input-container');        //div that holds 7 A-G buttons
 
   for(let i = 0; i < notesAG.length; i++) {              
 
@@ -136,75 +133,10 @@ function generateSequence() {
   }
 
   //Implement the fisher yates algorithm for random sequence
-  for (let i = sequence.length - 1; i > 0; i--) {
-
-    const randIndx = getRandom(0, i);
-
-    // Swap array values using destructuring
-    [sequence[i], sequence[randIndx]] = [sequence[randIndx], sequence[i]];
-
-  }
+  util.shuffleArray(sequence);
 
   g.sequenceLength = sequence.length;
   g.currentSequence = sequence;
-}
-
-function getColor(percent) {
-  //! Learn how this code works, later, don't just leave it here
-
-  const hue = (120 * percent); // Map 0-100% to 0-120° (red to green)
-
-  // if hue is more green, then we want less lightness, because super bright greens are ugly
-  const lightness = hue < 60 ? '50%' : '35%';
-
-  return `hsl(${hue}, 100%, ${lightness})`;
-}
-
-function drawScoreCircle(points, length) {
-
-  const canvas = document.querySelector('.score-circle');
-  const ctx = canvas.getContext('2d');
-
-  //Draw circle background in light gray
-  const centerX = canvas.width / 2;
-  const centerY = canvas.height / 2;
-  let radius = 60;
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
-  ctx.lineTo(centerX, centerY);
-  ctx.closePath();
-  ctx.fillStyle = 'rgb(215, 215, 215)';
-  ctx.fill();
-  
-  // Percentage of the circle to be filled here 0-1
-  let percent = points / length;
-  let percent100 = Math.floor(percent * 100);
-  const startAngle = -Math.PI/2;
-  const endAngle = startAngle + Math.PI * 2 * percent;
-
-  // Draw colored progress circle
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
-  ctx.lineTo(centerX, centerY);
-  ctx.closePath();
-  ctx.fillStyle = `${getColor(percent)}`;
-  ctx.fill();
-
-  // Draw white center circle
-  radius /= 1.3;
-  ctx.beginPath();
-  ctx.arc(centerX,centerY, radius, 0, Math.PI * 2, false);
-  ctx.lineTo(centerX, centerY);
-  ctx.closePath();
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.fill();
-
-  //Add text to center of circle
-  ctx.fillStyle = 'black';
-  ctx.font = '800 20px Arial';
-  ctx.textAlign = 'center'; 
-  ctx.textBaseline = 'middle'; 
-  ctx.fillText(`${percent100}%`, centerX, centerY);
 }
 
 function endGame() {
@@ -219,7 +151,7 @@ function endGame() {
   // Disable user input
   g.errorState = true;
 
-  drawScoreCircle(points, g.sequenceLength);
+  util.drawScoreCircle(points, g.sequenceLength);
 }
 
 function setupRestartBtn() {
@@ -313,7 +245,7 @@ function evaluateChoice(choice) {
 
     g.firstError = true;
 
-    if(g.volumeOn) playCorrectSound();
+    if(g.volumeOn) util.playCorrectSound();
     
     //correct animation
     btn.classList.add('btn-correct');
@@ -330,7 +262,7 @@ function evaluateChoice(choice) {
     
     if (g.firstError) incErrorCount();
     
-    if(g.volumeOn) playWrongSound();
+    if(g.volumeOn) util.playWrongSound();
 
     btn.classList.add('btn-wrong');
     btn.addEventListener('animationend', () => btn.classList.remove('btn-wrong'));
@@ -384,4 +316,4 @@ function initiateGame(gameType) {
   setupRestartBtn();
 }
 
-export {getRandom, initiateGame, removeImg, getNextLocation, generateSequence, drawScoreCircle};
+export { initiateGame, removeImg, getNextLocation, generateSequence};

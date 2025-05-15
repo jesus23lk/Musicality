@@ -166,6 +166,35 @@ a {
   padding: 0.9em 0;
 }
 
+.context-section.radio-form {
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.radio-form label {
+  cursor: pointer;
+}
+
+.radio-form div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: rgb(235, 246, 255);
+  border: 2px solid rgb(235, 246, 255);
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.selected {
+  border-color: rgb(109, 109, 246) !important;
+}
+
 .volume-icon {
   color: rgb(106, 106, 106) !important;
   font-size: 2.3rem !important;
@@ -341,7 +370,7 @@ it contains first a vertical measure line, then the staff, then another vertical
 }
 
 /* Div that holds our 8 buttons */
-.btn-container {                    
+.input-container {                    
   width: 100%;
   height: 75px;
   display: flex;
@@ -496,7 +525,7 @@ it contains first a vertical measure line, then the staff, then another vertical
   
   
   /* Div that holds our 8 buttons */
-  .btn-container {                    
+  .input-container {                    
     height: auto;
     justify-content: space-around;
     flex-wrap: wrap;

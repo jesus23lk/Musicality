@@ -9,7 +9,7 @@
   justify-content: center;
 }
 
-.btn-container {
+.input-container {
   height: auto;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -35,37 +35,8 @@
   text-decoration: none;
 }
 
-.key-type-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  font-size: 0.9rem;
-  width: 100%;
-}
-
-.key-type-form div {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  background-color: rgb(235, 246, 255);
-  border: 2px solid rgb(235, 246, 255);
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.key-type-form label {
-  cursor: pointer;
-}
-
-
 .arrow-logo {
   color: black;
-}
-
-.selected {
-  border-color: rgb(109, 109, 246) !important;
 }
 
 @media (max-width: 500px) {

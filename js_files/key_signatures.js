@@ -1,6 +1,5 @@
-import { getRandom, drawScoreCircle } from "./game.js";
 import { setupSidebar, setupContextSettings } from "./side_elements.js";
-import { playCorrectSound, playWrongSound} from "./util.js";
+import * as util from "./util.js";
 
 const allKeys = {
   "f_minor": "a_flat_major",
@@ -54,8 +53,10 @@ function setupVolume() {
 function changeMode(e) {
 
   const inputDiv = e.target.closest('div');
-  const inputEle = inputDiv.querySelector('input');
-  inputEle.checked = true;
+
+  // Get radio input
+  const radioCircle = inputDiv.querySelector('input');
+  radioCircle.checked = true;
   inputDiv.classList.add('selected');
 
   if (inputDiv.classList.contains('major-div')) {
@@ -83,7 +84,7 @@ function setupKeyForm() {
 
 function setupBtns() {
   
-  const btns = document.querySelectorAll('.btn-container button');
+  const btns = document.querySelectorAll('.input-container button');
 
   let i = 0;
 
@@ -109,19 +110,6 @@ function setupBtns() {
     i++;
   });
 
-}
-
-function generateSequence() {
-
-  //Implement the fisher yates algorithm for random sequence
-  for (let i = currentKeys.length - 1; i > 0; i--) {
-
-    const randIndx = getRandom(0, i);
-
-    // Swap array values using destructuring
-    [currentKeys[i], currentKeys[randIndx]] = [currentKeys[randIndx], currentKeys[i]];
-
-  }
 }
 
 function dipslayImg() {
@@ -161,13 +149,13 @@ function handleGameEnd() {
   const scoreSpan = document.querySelector('.done-modal span');
   scoreSpan.textContent = `${points + '/' + currentKeys.length}`;
 
-  drawScoreCircle(points, currentKeys.length);
+  util.drawScoreCircle(points, currentKeys.length);
 }
 
 function handleCorrect(e) {
   // For when user clicks right button
 
-  if (volume) playCorrectSound();
+  if (volume) util.playCorrectSound();
 
   const btn = e.target;
   firstError = true;
@@ -193,7 +181,7 @@ function handleWrong(e) {
 
   // Play animation when user clicks wrong button
 
-  if(volume) playWrongSound();
+  if(volume) util.playWrongSound();
 
   if (firstError) {
 
@@ -243,7 +231,7 @@ function restartGame() {
   const errorDiv = document.querySelector('.hud-right span');
   errorDiv.textContent = numErrors;
   firstError = true;
-  generateSequence()
+  util.shuffleArray(currentKeys);
   dipslayImg();
 
 }
@@ -265,7 +253,7 @@ function main() {
   setupContextSettings();
   setupKeyForm();
   setupBtns();
-  generateSequence();
+  util.shuffleArray(currentKeys);
   dipslayImg();
   setupRestartBtn();
   setupSidebar();
