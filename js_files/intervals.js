@@ -1,10 +1,16 @@
 /* THIS IS THE MAIN FILE FOR THE INTERVAL TEST */
 
-import {initiateGame} from "./game.js";
-import setupAllSideElements from "./side_elements.js";
+import * as util from "./util.js";
 
-window.onload = function() {
+const intervals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th'];
 
-  initiateGame('intervals');
-  setupAllSideElements();
+function setupBtns() {
+  
 }
+
+function main() {
+  util.createGrandStaff();
+  setupBtns();
+}
+
+main();

@@ -1,80 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interval Practice</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
-  <link rel="icon" type="image/ico" href="Images/favicon.ico">
-</head>
-<body>
-  <!-- Side bar content-->
-  <aside class="sidebar">
-    <div class="sidebar-section close-section">
-      <span>Close</span>
-      <span class="material-symbols-outlined close-icon">close</span>
-    </div>
-    <div class="sidebar-section volume-section">
-      <span>Volume</span>
-      <span class="material-symbols-outlined volume-icon">toggle_on</span>
-    </div>
-    <div class="sidebar-section note-range-section">
-      <span>Note Range</span>
-      <span class="material-symbols-outlined arrow-icon">keyboard_arrow_down</span>
-      <div class="note-range-container" data-visible="false">
-        <div class = 'select-container'>
-          <label for = 'max-select'>Highest Note</label>
-          <select class='max-select'></select>
-        </div>
-        <div class = 'select-container'>
-          <label for = 'min-select'>Lowest Note</label>
-          <select class='min-select'></select>
-        </div>
-        <button class='update-btn'>Update</button>
-        <button class='reset-btn'>Reset</button>
-        <p class='error-msg'></p>      
-      </div>
-    </div>
-  </aside>
 
-  <div class="cover"></div>
-  <!-- main content-->
-  <div class='page'>
-    <header class="page-header">
-      <span class="material-symbols-outlined menu-icon">menu</span>
-    </header>
-    <div class='center-area'>
-      <!-- BELOW IS TEST CODE, BE SURE TO REMOVE IT-->
-      <div class='canvas'>
-        <div class = 'vertical-line'></div>
-        <div class='staff'></div>
-        <div class = 'vertical-line'></div>
+<html>  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intervals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
+    <link rel = 'stylesheet' href='./CSS/global.css'>
+    <link rel="icon" type="image/ico" href="Images/favicon.ico">
+  </head>
+  <body>
+    <!-- Side bar content-->
+    <aside class="sidebar">
+      <div class="sidebar-section close-section">
+        <span>Close</span>
+        <span class="material-symbols-outlined close-icon">close</span>
       </div>
-      <div class="hud-section">
-        <div class="hud-note-range"></div>
-        <div class="note-number-container"></div>
-        <div class="mistakes-count">
-          <span>0</span>
-          <span class="material-symbols-outlined cancel-icon">cancel</span>
+      <a href="./index.html">
+        <div class="sidebar-section">
+          <span>Home</span>
         </div>
+      </a>
+      <a href="./key_signatures.html">
+        <div class="sidebar-section">
+          <span>Key Signatures</span>
+        </div>
+      </a>
+      <a href="./piano_keys.html">
+        <div class="sidebar-section">
+          <span>Piano Keys</span>
+        </div>
+      </a>
       </div>
-      <div class='btn-container'></div>
-      <!-- <div id = 'msg-banner'>Press a key or click</div> -->
-      <img src='Images/treble-clef.png' class='t-pic'>
-      <img src='Images/bass-clef.png' class='b-pic'>      
+    </aside>
+
+    <div class="cover"></div>
+    <!-- main content-->
+    <div class='page'>
+
+      <!-- Page Header -->
+      <header class="page-header">
+
+        <!-- Left side of header  -->
+        <div class="header-left">
+          <span class="material-symbols-outlined menu-icon">menu</span>
+          <a href="./index.html" class="logo-link">
+            <img src="./Images/music logo.svg" class='page-logo' alt="logo for header">
+            <span class="logo-text">Musicality</span>
+          </a>
+          <div class="header-links">
+            <a href="./single_notes.html">Single Notes</a>
+            <a href="./key_signatures.html">Key Signatures</a>
+            <a href="./piano_keys.html">Piano Keys</a>
+          </div>
+        </div>
+
+        <!-- Right side of header -->
+        <div class="header-right">
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+
+        <!-- Context menu for settings -->
+        <div class="settings-context hidden">
+          <span class="material-symbols-outlined close-context">close</span>
+          <div class="context-section" style="cursor: pointer;">
+            <span>Volume</span>
+            <span class="material-symbols-outlined volume-icon">toggle_on</span>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span>Highest Note</span>
+            <select class="max-select"></select>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span>Lowest Note</span>
+            <select class="min-select"></select>
+          </div>
+          <hr>
+          <div class="context-section">
+            <span class="error-msg"></span>
+          </div>
+          <div class="context-section" style="justify-content: center;">
+            <button class="reset-note-range-btn">Reset Note Range</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Center  -->
+      <div class='center-area'>
+        <div class='canvas'>
+          <div class = 'vertical-line'></div>
+          <div class='staff'></div>
+          <div class = 'vertical-line'></div>
+        </div>
+        <div class="hud-section">
+          <!-- Was hud-note-range  -->
+          <div class="hud-left"></div>
+
+          <!-- Was note-number-container  -->
+          <div class="hud-center"></div>
+
+           <!-- Was mistakes-count  -->
+          <div class="hud-right">
+            <span>0</span>
+            <span class="material-symbols-outlined cancel-icon">cancel</span>
+          </div>
+        </div>
+
+        <!-- Container for user input -->
+        <div class='input-container'></div>
+        
+        <!-- <div id = 'msg-banner'>Press a key or click</div> -->
+        <img src='Images/treble-clef.png' class='t-pic'>
+        <img src='Images/bass-clef.png' class='b-pic'>      
+      </div>
     </div>
-  </div>
-  <dialog class="done-modal">
-    <h2>
-        Your Score
-    </h2>
-    <span></span>
-    <canvas class="score-circle" width="150" height="150">
+    <dialog class="done-modal">
+      <h2>
+          Your Score
+      </h2>
       <span></span>
-    </canvas>
-    <button class="restart-game-btn">Restart</button>
-  </dialog>
-  <script src="./js_files/intervals.js" type="module"></script>
-</body>
+      <canvas class="score-circle" width="150" height="150">
+        <span></span>
+      </canvas>
+      <button class="restart-game-btn">Restart</button>
+    </dialog>
+    <script src = './js_files/intervals.js' type="module"></script>
+  </body>
 </html>

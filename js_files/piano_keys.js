@@ -1,5 +1,4 @@
 import * as util from "./util.js";
-import { setupSidebar, setupContextSettings } from "./side_elements.js";
  
 /* DIFFICULTIES 
 
@@ -232,9 +231,8 @@ function main() {
   displayKey();
   setupRestartBtn();
 
-  // Functions from side_elements.js
-  setupContextSettings();
-  setupSidebar();
+  util.setupContextSettings();
+  util.setupSidebar();
 }
 
 main();

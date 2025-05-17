@@ -1,5 +1,8 @@
 //! FUNCTIONS THAT ARE USED BY MULTIPLE PAGES
 
+/* Used to populate lines and spaces noteval property */
+const notes = ['C', 'B', 'A', 'G', 'F', 'E', 'D'];
+
 function playCorrectSound() {
   const correctSound = new Audio("./audio/correct_answer.mp3");
   correctSound.play();
@@ -85,4 +88,121 @@ function drawScoreCircle(points, length) {
   ctx.fillText(`${percent100}%`, centerX, centerY);
 }
 
-export {playCorrectSound, playWrongSound, shuffleArray, drawScoreCircle}
+function createGrandStaff() {
+
+  // Creates all lines and spaces in grand staff as divs
+
+  const grdStaff = document.querySelector('.staff');                  //grand staff contains all lines and spaces
+  
+  for(let i = 0; i < 52; i++) {
+
+    const curChild = document.createElement('div');
+
+    //Lines on even indices
+    if(i % 2 === 0) {                         
+
+      if(i < 17 || i > 39 || i === 28) {      //Ledger lines above treble clef, below bass clef, and middle C
+
+        curChild.className = 'ledger-line';
+      }
+
+      else curChild.className = 'line';
+    }
+
+    //Spaces on odd indices
+    else {
+
+      /*ledger spaces start at 2nd space above treble clef and higher.
+        Also 2nd space below bass clef and lower*/
+      
+      if (i < 16 || i > 40) curChild.className = 'ledger-space';         
+
+      else curChild.className = 'space';                                
+    }   
+
+    curChild.classList.add('loc-' + i);                       
+    curChild.idNum = i;                             //A seperate property idNum is created here
+    curChild.noteVal = notes[i % 7];                //Assign a note value (A-G) to each location
+
+    grdStaff.appendChild(curChild);                    
+  }
+
+}
+
+function setupContextSettings() {
+
+  const context = document.querySelector('.settings-context');
+  const settingsIcon = document.querySelector('.header-right span');
+  const closeIcon = document.querySelector('.close-context');
+  const cover = document.querySelector('.cover');
+
+  settingsIcon.addEventListener('click', () => {
+
+    context.classList.toggle('hidden');
+
+    if (!context.classList.contains('hidden')) cover.style.display = 'block';
+  });
+
+  document.body.addEventListener('click', (e) => {
+
+    // Don't close context if we click within context or on settings icon
+    if (context.contains(e.target) || e.target === settingsIcon) return;
+
+    if (!context.classList.contains('hidden')) {
+      context.classList.add('hidden');
+    }
+  })
+
+  closeIcon.addEventListener('click', () => {
+    context.classList.add('hidden')
+    cover.style.display = 'none';
+  });
+
+  
+};
+
+function setupVolume(volumeOn) {
+
+  // The global volume variable you are using must be set equal to what this function returns
+
+  const volumeIcon = document.querySelector('.volume-icon');
+  const volumeSection = volumeIcon.closest('.context-section');
+  
+  volumeSection.addEventListener('click', () => {
+    
+    if(volumeOn) {
+      volumeIcon.textContent = 'toggle_off';
+      return false;
+    }
+    
+    else {
+      volumeIcon.textContent = 'toggle_on';
+      return true;
+    }
+  });
+}
+
+function setupSidebar() {
+
+  const menuIcon = document.querySelector(".menu-icon");
+  const closeSection = document.querySelector(".close-section");
+  const sideBar = document.querySelector(".sidebar");
+  const cover = document.querySelector('.cover');
+
+  cover.addEventListener('click',() => {
+    sideBar.classList.remove('visible');
+    cover.style.display = 'none';
+  });
+
+  menuIcon.addEventListener('click', () => {
+    sideBar.classList.add("visible");
+    cover.style.display = 'block';
+  });
+
+  closeSection.addEventListener('click', () => {
+    sideBar.classList.remove("visible");
+    cover.style.display = 'none';
+  });
+}
+
+export {playCorrectSound, playWrongSound, shuffleArray, drawScoreCircle, createGrandStaff, setupContextSettings, setupVolume, setupSidebar}

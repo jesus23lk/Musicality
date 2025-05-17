@@ -1,4 +1,3 @@
-import { setupSidebar, setupContextSettings } from "./side_elements.js";
 import * as util from "./util.js";
 
 const allKeys = {
@@ -250,13 +249,13 @@ function main() {
   else if (currentMode === 'minor') currentKeys = Object.keys(allKeys);
 
   setupVolume();
-  setupContextSettings();
+  util.setupContextSettings();
   setupKeyForm();
   setupBtns();
   util.shuffleArray(currentKeys);
   dipslayImg();
   setupRestartBtn();
-  setupSidebar();
+  util.setupSidebar();
 }
 
 main();
