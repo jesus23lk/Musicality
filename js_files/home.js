@@ -1,3 +1,3 @@
-import { setupSidebar } from "./side_elements.js";
+import { setupSidebar } from "./util.js";
 
 setupSidebar();
