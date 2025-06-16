@@ -227,7 +227,6 @@ function main() {
   setupVolume();
   setupKeys();
   util.shuffleArray(keys, difficulty);
-  console.log(keys);
   displayKey();
   setupRestartBtn();
 

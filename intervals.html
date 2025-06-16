@@ -7,6 +7,7 @@
     <title>Intervals</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&icon_names=cancel,close,keyboard_arrow_down,keyboard_arrow_up,menu,more_vert,settings,toggle_off,toggle_on&display=block" rel="stylesheet" />
     <link rel = 'stylesheet' href='./CSS/global.css'>
+    <link rel = 'stylesheet' href='./CSS/intervals.css'>
     <link rel="icon" type="image/ico" href="Images/favicon.ico">
   </head>
   <body>
@@ -52,6 +53,7 @@
             <a href="./single_notes.html">Single Notes</a>
             <a href="./key_signatures.html">Key Signatures</a>
             <a href="./piano_keys.html">Piano Keys</a>
+            <a href="./intervals.html">Intervals</a>
           </div>
         </div>
 
@@ -63,40 +65,28 @@
         <!-- Context menu for settings -->
         <div class="settings-context hidden">
           <span class="material-symbols-outlined close-context">close</span>
-          <div class="context-section" style="cursor: pointer;">
+          <div class="context-section volume-section" style="cursor: pointer;">
             <span>Volume</span>
             <span class="material-symbols-outlined volume-icon">toggle_on</span>
-          </div>
-          <hr>
-          <div class="context-section">
-            <span>Highest Note</span>
-            <select class="max-select"></select>
-          </div>
-          <hr>
-          <div class="context-section">
-            <span>Lowest Note</span>
-            <select class="min-select"></select>
-          </div>
-          <hr>
-          <div class="context-section">
-            <span class="error-msg"></span>
-          </div>
-          <div class="context-section" style="justify-content: center;">
-            <button class="reset-note-range-btn">Reset Note Range</button>
           </div>
         </div>
       </header>
 
       <!-- Page Center  -->
       <div class='center-area'>
+
+        <!-- Displays what we are being tested on-->
         <div class='canvas'>
           <div class = 'vertical-line'></div>
           <div class='staff'></div>
           <div class = 'vertical-line'></div>
         </div>
+
+        <!-- Central hud zone -->
         <div class="hud-section">
+
           <!-- Was hud-note-range  -->
-          <div class="hud-left"></div>
+          <div class="hud-left">Harmonic</div>
 
           <!-- Was note-number-container  -->
           <div class="hud-center"></div>
@@ -108,12 +98,20 @@
           </div>
         </div>
 
-        <!-- Container for user input -->
-        <div class='input-container'></div>
+        <!-- Container for user input or buttons -->
+        <div class='input-container'>
+          <button class="btn">2nd</button>
+          <button class="btn">3rd</button>
+          <button class="btn">4th</button>
+          <button class="btn">5th</button>
+          <button class="btn">6th</button>
+          <button class="btn">7th</button>
+          <button class="btn">8th</button>
+          <button class="btn">9th</button>
+        </div>
         
         <!-- <div id = 'msg-banner'>Press a key or click</div> -->
         <img src='Images/treble-clef.png' class='t-pic'>
-        <img src='Images/bass-clef.png' class='b-pic'>      
       </div>
     </div>
     <dialog class="done-modal">

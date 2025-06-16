@@ -161,27 +161,6 @@ function setupContextSettings() {
   
 };
 
-function setupVolume(volumeOn) {
-
-  // The global volume variable you are using must be set equal to what this function returns
-
-  const volumeIcon = document.querySelector('.volume-icon');
-  const volumeSection = volumeIcon.closest('.context-section');
-  
-  volumeSection.addEventListener('click', () => {
-    
-    if(volumeOn) {
-      volumeIcon.textContent = 'toggle_off';
-      return false;
-    }
-    
-    else {
-      volumeIcon.textContent = 'toggle_on';
-      return true;
-    }
-  });
-}
-
 function setupSidebar() {
 
   const menuIcon = document.querySelector(".menu-icon");
@@ -205,4 +184,4 @@ function setupSidebar() {
   });
 }
 
-export {playCorrectSound, playWrongSound, shuffleArray, drawScoreCircle, createGrandStaff, setupContextSettings, setupVolume, setupSidebar}
+export {playCorrectSound, playWrongSound, shuffleArray, drawScoreCircle, createGrandStaff, setupContextSettings, setupSidebar, getRandom}

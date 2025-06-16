@@ -41,6 +41,26 @@ let currentSequence = [];
 let sequenceNum = 1;
 let sequenceLength = null;
 
+function setupVolume() {
+
+
+  const volumeIcon = document.querySelector('.volume-icon');
+  const volumeSection = volumeIcon.closest('.context-section');
+  
+  volumeSection.addEventListener('click', () => {
+    
+    if(volumeOn) {
+      volumeIcon.textContent = 'toggle_off';
+      volumeOn = false;
+    }
+    
+    else {
+      volumeIcon.textContent = 'toggle_on';
+      volumeOn = true;
+    }
+  });
+}
+
 function setupDropDowns() {
 
   let charRange = 'CBAGFED'         //Defines the range of characters we want
@@ -479,6 +499,7 @@ function main() {
   util.createGrandStaff();
   
   setupBtns();
+  setupVolume();
 
   generateSequence();
 
@@ -494,7 +515,6 @@ function main() {
   updateHudNoteRange();
 
   util.setupContextSettings();
-  volumeOn = util.setupVolume(volumeOn);
   util.setupSidebar();
 }
 

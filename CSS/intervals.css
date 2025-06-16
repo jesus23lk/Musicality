@@ -1,0 +1,72 @@
+.canvas {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.btn {
+  width: 55px;
+  height: 55px;
+}
+
+.ledger-line, .line {
+  height: 4px;
+}
+
+.ledger-line {
+  width: 20%;
+}
+
+.ledger-line.visible {
+  background-color: black;
+}
+
+.ledger-space, .space {
+  height: 28px;
+}
+
+.t-pic {
+  height: 230px;
+  left: 5px;
+  top: 135px;
+}
+
+.vertical-line {
+  width: 6px;
+  top: 128px;
+  height: 132px;
+}
+
+.interval-pic {
+  height: 160px;
+  position: absolute;
+}
+
+.interval-pic.on-line {
+  left: 250px;
+  top: -110px;
+}
+
+.interval-pic.on-space {
+  left: 250px;
+  top: -132px;  
+}
+
+.note {
+  /* height: 245px; */
+  height: 260px;
+}
+
+.higher-note {
+
+}
+
+.lower-note {
+}
+
+.hud-left {
+  width: 16%;
+}
+
+.flipped-note {
+  /* transform: translateX(5px); */
+}
