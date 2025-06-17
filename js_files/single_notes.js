@@ -131,10 +131,10 @@ function setupDropDowns() {
     minSelect.appendChild(minOption);
     
     //! You shouldn't hardcode these values here, rather you should set the to what they are in g
-    if(i === 11) maxOption.selected = 'selected' ;                      /* Defiens the default value of the highest note
+    if(i === 11) maxOption.selected = true;                      /* Defiens the default value of the highest note
                                                                           which is F6 */
 
-    if(i === 45) minOption.selected = 'selected';                       /* Defines the default value of the lowest note
+    if(i === 45) minOption.selected = true;                       /* Defines the default value of the lowest note
                                                                           Which is G1*/
   }
 
@@ -144,7 +144,7 @@ function setupDropDowns() {
   /* Below we configure our reset button. clicked to reset
     highest and lowest notes */
 
-  const resetBtn = document.querySelector('.reset-note-range-btn');
+  const resetBtn = document.querySelector('.reset-option-btn');
   resetBtn.addEventListener('click', resetMinMax);                                 
 }
 
@@ -216,8 +216,8 @@ function resetMinMax() {
   const minSelect = document.querySelector('.min-select');    
 
   // Return lowest and highest note selectors to their default values
-  maxSelect.options[11].selected = 'selected';                 
-  minSelect.options[45].selected = 'selected';                
+  maxSelect.options[11].selected = true;                 
+  minSelect.options[45].selected = true;                
 
   //Reset global highest and lowest
   highestNote = 11;              

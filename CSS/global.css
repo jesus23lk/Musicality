@@ -143,7 +143,7 @@ a {
   top: 3%;
 }
 
-.reset-note-range-btn {
+.reset-option-btn {
   padding: 1em;
   width: 75%;
   background-color: rgb(103, 190, 234);
@@ -154,7 +154,7 @@ a {
   border-radius: 10px;
 }
 
-.min-select, .max-select {
+.option-select {
   border-radius: 8px;
   padding: 0.2em;
 }

@@ -20,6 +20,69 @@ let note2 = null;
 
 let volume = true;
 
+function resetReps (numSelect) {
+  console.log(repNum);  
+
+  const defaultOption = numSelect.options[2];
+  defaultOption.selected = true;
+  numReps = Number(defaultOption.textContent);
+  
+  note1.remove();
+  note2.remove();
+
+  restartGame();
+}
+
+function updateRepetitions(e) {
+
+  // Close context menu after user clicks option
+  const context = document.querySelector('.settings-context');
+  const cover = document.querySelector('.cover');
+  context.classList.toggle('hidden');
+  cover.style.display = 'none';
+  
+  const numSelect = e.target;
+  const selectedOption = numSelect.options[numSelect.selectedIndex];
+  numReps = Number(selectedOption.textContent);
+
+  numTerms = numReps * intervals.length;
+  const numDiv = document.querySelector('.hud-center');
+  numDiv.textContent = (curInterval + 1) + (repNum * intervals.length) + '/' + numTerms;
+
+  note1.remove();
+  note2.remove();
+
+  restartGame();
+}
+
+function setupDropDowns() {
+
+  const numSelect = document.querySelector('.num-select');
+
+  for (let i = 0; i < 10; i++) {
+
+    const option = document.createElement('option');
+    option.textContent = i + 1;
+    numSelect.appendChild(option);
+  }
+
+  let foundOption;
+
+  for (let option of numSelect.options) {
+    if (option.textContent === String(numReps)) {
+      foundOption = option;
+      break;
+    }
+  }
+
+  foundOption.selected = true;
+
+  numSelect.addEventListener('change', updateRepetitions);
+
+  // Button to reset repetitions
+  const resetBtn = document.querySelector('.reset-option-btn');
+  resetBtn.addEventListener('click', () => resetReps(numSelect));                                 
+}
 
 function setupVolume() {
 
@@ -312,6 +375,7 @@ function setupRestartBtn() {
 
 function main() {
 
+  setupDropDowns();
   setupVolume();
 
   util.setupContextSettings();
