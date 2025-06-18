@@ -70,3 +70,36 @@
 .flipped-note {
   /* transform: translateX(5px); */
 }
+
+@media (max-width: 500px) {
+  
+  .ledger-space, .space {
+    height: 20px;
+  }
+
+  .ledger-line {
+    width: 30%;
+  }
+
+  .note {
+    height: 190px;
+  }
+
+  .vertical-line {
+    top: 96px;
+    height: 100px;
+  }
+
+  .t-pic {
+    height: 175px;
+    top: 115px;
+  }
+
+  .hud-center {
+    width: 25%;
+  }
+
+  .hud-left, .hud-right {
+    width: 30%;
+  }
+}
